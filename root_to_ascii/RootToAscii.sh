@@ -1,0 +1,2 @@
+root -l -b -q "RootToAscii.C+(\"/Users/cantacuzene/n-ri-22/histo/PnGa82/BetaCondi.root\",\"/Users/cantacuzene/n-ri-22/histo/PnGa82/BetaCondi.dat\")"&
+root -l -b -q "RootToAscii.C+(\"/Users/cantacuzene/n-ri-22/histo/PnGa82/Ge_single.root\",\"/Users/cantacuzene/n-ri-22/histo/PnGa82/Ge_single.dat\")"&
