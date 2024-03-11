@@ -20,10 +20,10 @@ Sorter::Sorter(const char* InputFileName, const char* OutputFileName, Double_t c
 
     FillBetaCoincBranches(10e6);
 
-    FillBetaXnCoincBranches(200e6);
-    FillBetaXnBackwardCoincBranches(200e6);
+    //FillBetaXnCoincBranches(200e6);
+    //FillBetaXnBackwardCoincBranches(200e6);
 
-    //FillnnCoincBranches(200e6);
+    FillnnCoincBranches(200e6);
 
     output_file->Close();
 
@@ -583,8 +583,6 @@ void Sorter::FillnnCoincBranches(Double_t coincwindow)
 	for(fEntry = 0; fEntry < fEntries; fEntry++)
 	{
         raw_data_tree->GetEntry(fEntry);
-
-        if(raw_time <= 800 * 1e9 || raw_time >= 2200 *1e9) continue;
 
         ClearVectors();
         

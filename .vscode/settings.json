@@ -1,0 +1,13 @@
+{
+    "files.associations": {
+        "Aligner.C": "cpp",
+        "Sorter.C": "cpp",
+        "new": "cpp",
+        "vector": "cpp",
+        "Fitter.C": "cpp",
+        "FitBeta84Ga.C": "cpp",
+        "complex": "cpp",
+        "FitBeta82Ga.C": "cpp",
+        "FitTetra84Ga.C": "cpp"
+    }
+}

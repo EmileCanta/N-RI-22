@@ -1,2 +1,2 @@
-root -l -b -q "Sorter.C+(\"/Users/cantacuzene/n-ri-22/runs/raw_runs/TETRA23_RUN19.root\",\"/Users/cantacuzene/n-ri-22/runs/sorted_runs/RUN19.root\",30000,30000,0)"
-root -l -b -q "Aligner.C+(\"/Users/cantacuzene/n-ri-22/runs/sorted_runs/RUN19.root\",30010)"
+root -l -b -q "Sorter.C+(\"/Users/cantacuzene/data/n-ri-22/runs/raw_runs/TETRA23_RUN19.root\",\"/Users/cantacuzene/data/n-ri-22/runs/sorted_runs/RUN19.root\",30000,30000,0)"
+root -l -b -q "Aligner.C+(\"/Users/cantacuzene/data/n-ri-22/runs/sorted_runs/RUN19.root\",30010)"

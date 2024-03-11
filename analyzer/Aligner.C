@@ -12,7 +12,7 @@
 #include <root/TH2.h>
 #include <root/TRandom.h>
 
-void Aligner(const char* inputFileName, Double_t maxTime)
+void Aligner(const char* inputFileName, Double_t maxTime, Double_t Offset)
 {   
     cout << "Removing missaligned cycles" << endl;
 
@@ -35,6 +35,14 @@ void Aligner(const char* inputFileName, Double_t maxTime)
 
     TH1D* AlignedBeta_Time_single = new TH1D("AlignedBeta_Time_single","AlignedBeta_Time_single",30000,0,30000);
     TH1D* AlignedTetra_Time_single = new TH1D("AlignedTetra_Time_single","AlignedTetra_Time_single",30000,0,30000);
+
+    TH1D* UnalignedBeta_Time_single = new TH1D("UnalignedBeta_Time_single","UnalignedBeta_Time_single",30000,0,30000);
+    TH1D* UnalignedTetra_Time_single = new TH1D("UnalignedTetra_Time_single","UnalignedTetra_Time_single",30000,0,30000);
+
+    AlignedBeta_Time_single->Reset();
+    AlignedTetra_Time_single->Reset();
+    UnalignedBeta_Time_single->Reset();
+    UnalignedTetra_Time_single->Reset();
 
     data_tree->SetBranchAddress("Beta_Time_single", &fBeta_Time);
     data_tree->SetBranchAddress("Beta_Cycle", &fBeta_Cycle);
@@ -112,6 +120,12 @@ void Aligner(const char* inputFileName, Double_t maxTime)
             {
                 AlignedBeta_Time_single->Fill(fBeta_Time->at(j));
             }
+
+            else
+            {
+                AlignedBeta_Time_single->Fill(fBeta_Time->at(j)-Offset);
+                UnalignedBeta_Time_single->Fill(fBeta_Time->at(j));
+            }
         }
 
         for(ULong_t j = 0; j < fTetra_Time->size(); ++j)
@@ -119,6 +133,12 @@ void Aligner(const char* inputFileName, Double_t maxTime)
             if(fAlignement.at(j) == 1)
             {
                 AlignedTetra_Time_single->Fill(fTetra_Time->at(j));
+            }
+
+            else
+            {
+                AlignedTetra_Time_single->Fill(fTetra_Time->at(j)-Offset);
+                UnalignedTetra_Time_single->Fill(fTetra_Time->at(j));
             }
         }
     }

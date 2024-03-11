@@ -1,0 +1,8 @@
+root -l -b -q "Sorter.C+(\"/Users/cantacuzene/data/n-ri-22/runs/raw_runs/TETRA23_RUN71.root\",\"/Users/cantacuzene/data/n-ri-22/runs/sorted_runs/RUN71.root\",2000,4500,500)"
+root -l -b -q "Sorter.C+(\"/Users/cantacuzene/data/n-ri-22/runs/raw_runs/TETRA23_RUN72.root\",\"/Users/cantacuzene/data/n-ri-22/runs/sorted_runs/RUN72.root\",2000,4500,500)"
+root -l -b -q "Sorter.C+(\"/Users/cantacuzene/data/n-ri-22/runs/raw_runs/TETRA23_RUN73.root\",\"/Users/cantacuzene/data/n-ri-22/runs/sorted_runs/RUN73.root\",2000,4500,500)"
+root -l -b -q "Sorter.C+(\"/Users/cantacuzene/data/n-ri-22/runs/raw_runs/TETRA23_RUN74.root\",\"/Users/cantacuzene/data/n-ri-22/runs/sorted_runs/RUN74.root\",2000,4500,500)"
+root -l -b -q "Sorter.C+(\"/Users/cantacuzene/data/n-ri-22/runs/raw_runs/TETRA23_RUN75.root\",\"/Users/cantacuzene/data/n-ri-22/runs/sorted_runs/RUN75.root\",2000,4500,500)"
+root -l -b -q "Sorter.C+(\"/Users/cantacuzene/data/n-ri-22/runs/raw_runs/TETRA23_RUN76.root\",\"/Users/cantacuzene/data/n-ri-22/runs/sorted_runs/RUN76.root\",2000,4500,500)"
+root -l -b -q "Sorter.C+(\"/Users/cantacuzene/data/n-ri-22/runs/raw_runs/TETRA23_RUN77.root\",\"/Users/cantacuzene/data/n-ri-22/runs/sorted_runs/RUN77.root\",2000,4500,500)"
+root -l -b -q "Sorter.C+(\"/Users/cantacuzene/data/n-ri-22/runs/raw_runs/TETRA23_RUN78.root\",\"/Users/cantacuzene/data/n-ri-22/runs/sorted_runs/RUN78.root\",2000,4500,500)"
