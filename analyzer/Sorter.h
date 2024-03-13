@@ -50,6 +50,8 @@ class Sorter{
 
 	std::vector<Double_t> fTetra_Time_single;
 
+	std::vector<Double_t> fTetra_Rings;
+
 	std::vector<Double_t> fGeBeta_E_coinc;
 	std::vector<Double_t> fGeTetra_E_coinc;
 
@@ -87,6 +89,12 @@ class Sorter{
 
 	std::vector<Double_t> fnn_TimeDiff;
 	std::vector<Double_t> fnn_Time_coinc;
+
+	std::vector<Double_t> fStoringFirstNeutronCellGroup;
+	std::vector<Double_t> fStoringSecondNeutronCellGroup;
+
+	std::vector<Double_t> fFirstNeutronCellGroup;
+	std::vector<Double_t> fSecondNeutronCellGroup;
 
 	std::vector<Double_t> fTetra_Cycle;
 	std::vector<Double_t> fBeta_Cycle;

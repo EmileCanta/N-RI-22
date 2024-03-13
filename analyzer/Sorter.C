@@ -20,8 +20,8 @@ Sorter::Sorter(const char* InputFileName, const char* OutputFileName, Double_t c
 
     FillBetaCoincBranches(10e6);
 
-    //FillBetaXnCoincBranches(200e6);
-    //FillBetaXnBackwardCoincBranches(200e6);
+    FillBetaXnCoincBranches(200e6);
+    FillBetaXnBackwardCoincBranches(200e6);
 
     FillnnCoincBranches(200e6);
 
@@ -91,6 +91,8 @@ void Sorter::ClearVectors()
     fGe_E_single.clear();
     fGe_Time_single.clear();
 
+    fTetra_Rings.clear();
+
     fGeBeta_E_coinc.clear();
     fGeTetra_E_coinc.clear();
         
@@ -124,6 +126,12 @@ void Sorter::ClearVectors()
 
     fnn_TimeDiff.clear();
     fnn_Time_coinc.clear();
+
+    fStoringFirstNeutronCellGroup.clear();
+    fStoringSecondNeutronCellGroup.clear();
+
+    fFirstNeutronCellGroup.clear();
+    fSecondNeutronCellGroup.clear();
 
     fTetra_Cycle.clear();
     fBeta_Cycle.clear();
@@ -207,6 +215,8 @@ void Sorter::SetTreesAndBranches(const char* OutputFileName)
 
     output_tree_single->Branch("Beta_Time_single", &fBeta_Time_single);
     output_tree_single->Branch("Ge_Cycle", &fGe_Cycle);
+
+    output_tree_single->Branch("Tetra_Rings", &fTetra_Rings);
     
     //Coinc branches
 
@@ -238,6 +248,11 @@ void Sorter::SetTreesAndBranches(const char* OutputFileName)
     //Raw index
     output_tree_coinc->Branch("GeTetra_Index", &fGeTetra_Index);
     output_tree_coinc->Branch("GeBeta_Index", &fGeBeta_Index);
+
+    //Cell groups
+    output_tree_coinc->Branch("FirstNeutronCellGroup", &fFirstNeutronCellGroup);
+    output_tree_coinc->Branch("SecondNeutronCellGroup", &fSecondNeutronCellGroup);
+
 }
 
 //******************************************************************************
@@ -270,6 +285,27 @@ void Sorter::FillSingleBranches()
         {
             fTetra_Time_single.push_back(raw_time / 1e9); //millisecond
             fTetra_Cycle.push_back(fCycle);
+
+            if(raw_det_nbr >= 1 && raw_det_nbr <= 2)
+            {
+                fTetra_Rings.push_back(1.);
+            }
+
+            if(raw_det_nbr >= 3 && raw_det_nbr <= 5)
+            {
+                fTetra_Rings.push_back(2.);
+            }
+
+            if(raw_det_nbr >= 6 && raw_det_nbr <= 8)
+            {
+                fTetra_Rings.push_back(3.);
+            }
+
+            if(raw_det_nbr >= 9 && raw_det_nbr <= 12)
+            {
+                fTetra_Rings.push_back(4.);
+            }
+            
         }
 
         else if(raw_det_nbr == 14)
@@ -593,7 +629,9 @@ void Sorter::FillnnCoincBranches(Double_t coincwindow)
         int neutcount = 0;
 
         if(fTetra_Id >= 1 && fTetra_Id <= 12)
-        {   
+        {  
+            fStoringFirstNeutronCellGroup.push_back(fTetra_Id);
+
             if(fEntry < lastevent) continue;
             
             while(TMath::Abs(raw_time - fTetra_Time) < coincwindow)
@@ -615,6 +653,7 @@ void Sorter::FillnnCoincBranches(Double_t coincwindow)
                             {
                                 fStoring1n_Time.push_back(fTetra_Time / 1e9);
                                 fStoring1n_TimeDiff.push_back(TMath::Abs(raw_time - fTetra_Time) / 1e6);
+                                fStoringSecondNeutronCellGroup.push_back(raw_det_nbr);
                             }
                         }
                     }
@@ -625,6 +664,9 @@ void Sorter::FillnnCoincBranches(Double_t coincwindow)
             {
                 fnn_TimeDiff.push_back(fStoring1n_TimeDiff.front());
                 fnn_Time_coinc.push_back(fStoring1n_Time.front());
+
+                fFirstNeutronCellGroup.push_back(fStoringFirstNeutronCellGroup.front());
+                fSecondNeutronCellGroup.push_back(fStoringSecondNeutronCellGroup.front());
             }
 
 	    lastevent = fEntry + eventafter;
@@ -684,9 +726,16 @@ void Sorter::Histogrammer(const char* OutputFileName)
     TH1D* GeBeta_E_coinc = new TH1D("GeBeta_E_coinc", "GeBeta_E_coinc", 7000, 0, 7000);
     TH1D* GeTetra_E_coinc = new TH1D("GeTetra_E_coinc", "GeTetra_E_coinc", 7000, 0, 7000);
 
+    TH1D* FirstNeutronCellGroup = new TH1D("FirstNeutronCellGroup", "FirstNeutronCellGroup", 28, 0, 14);
+    TH1D* SecondNeutronCellGroup = new TH1D("SecondNeutronCellGroup", "SecondNeutronCellGroup", 28, 0, 14);
+
+    TH1D* Tetra_Rings = new TH1D("Tetra_Rings", "Tetra_Rings", 10, 0, 5);
+
     //Bidim
     TH2D* ESvsBTD = new TH2D("ESvsBTD", "ESvsBTD", 5000, 0, 10, 7000, 0, 7000);
     TH2D* ESvsTTD = new TH2D("ESvsTTD", "ESvsTTD", 1000, 0, 200, 7000, 0, 7000);
+
+    TH2D* CellGroups = new TH2D("CellGroups", "CellGroups", 28, 0, 14, 28, 0, 14);
 
     std::vector<Double_t> *ffGe_E_single = 0;
 
@@ -720,6 +769,11 @@ void Sorter::Histogrammer(const char* OutputFileName)
     std::vector<Double_t> *ffGeBeta_E_coinc = 0;
     std::vector<Double_t> *ffGeTetra_E_coinc = 0;
 
+    std::vector<Double_t> *ffFirstNeutronCellGroup = 0;
+    std::vector<Double_t> *ffSecondNeutronCellGroup = 0;
+
+    std::vector<Double_t> *ffTetra_Rings = 0;
+
     tsingle->SetBranchAddress("Ge_E_single",&ffGe_E_single);
 
     tsingle->SetBranchAddress("Ge_Time_single",&ffGe_Time_single);
@@ -729,6 +783,8 @@ void Sorter::Histogrammer(const char* OutputFileName)
     tsingle->SetBranchAddress("Tetra_Cycle",&ffTetra_Cycle);
     tsingle->SetBranchAddress("Beta_Cycle",&ffBeta_Cycle);
     tsingle->SetBranchAddress("Ge_Cycle",&ffGe_Cycle);
+
+    tsingle->SetBranchAddress("Tetra_Rings",&ffTetra_Rings);
 
     tcoinc->SetBranchAddress("GeBeta_TimeDiff",&ffGeBeta_TimeDiff);
     tcoinc->SetBranchAddress("GeTetra_TimeDiff",&ffGeTetra_TimeDiff);
@@ -751,6 +807,9 @@ void Sorter::Histogrammer(const char* OutputFileName)
 
     tcoinc->SetBranchAddress("GeBeta_E_coinc",&ffGeBeta_E_coinc);
     tcoinc->SetBranchAddress("GeTetra_E_coinc",&ffGeTetra_E_coinc);
+
+    tcoinc->SetBranchAddress("FirstNeutronCellGroup",&ffFirstNeutronCellGroup);
+    tcoinc->SetBranchAddress("SecondNeutronCellGroup",&ffSecondNeutronCellGroup);
 
     for(Long64_t i = 0; i < tsingle->GetEntries(); ++i)
     {
@@ -780,6 +839,7 @@ void Sorter::Histogrammer(const char* OutputFileName)
         for(ULong_t j = 0; j < ffTetra_Time_single->size(); ++j)
         {
             Tetra_Time_single->Fill(ffTetra_Time_single->at(j));
+            Tetra_Rings->Fill(ffTetra_Rings->at(j));
         }
 
         for(ULong_t j = 0; j < ffBeta_Cycle->size(); ++j)
@@ -843,6 +903,11 @@ void Sorter::Histogrammer(const char* OutputFileName)
         {
             nn_TimeDiff->Fill(ffnn_TimeDiff->at(j));
             nn_Time_coinc->Fill(ffnn_Time_coinc->at(j));
+
+            FirstNeutronCellGroup->Fill(ffFirstNeutronCellGroup->at(j));
+            SecondNeutronCellGroup->Fill(ffSecondNeutronCellGroup->at(j));
+
+            CellGroups->Fill(ffFirstNeutronCellGroup->at(j), ffSecondNeutronCellGroup->at(j));
         }
     }
 
