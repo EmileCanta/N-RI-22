@@ -5,25 +5,25 @@ Double_t Bateman_tot(Double_t *x, Double_t *par)
 	
 	if(x[0] < t0)
     {
-      	return (2283.59);
+      	return (2370.66);
     }
     
   	if(x[0] >= t0 && x[0] < tc+t0)
     {	
-      	return (2283.59)
-		+(-exp(-x[0]*l1)*(exp(t0*l1)-exp(x[0]*l1))*462.535)
-		+((-exp(-x[0]*l1-x[0]*l2)*(-1+0.358798)*(exp(x[0]*l1+t0*l2)*l1-exp(x[0]*l1+x[0]*l2)*l1-exp(t0*l1+x[0]*l2)*l2+exp(x[0]*l1+x[0]*l2)*l2)*462.535)/(-l1+l2))
-		+((exp(-x[0]*l1-x[0]*l3)*(0.358798)*(exp(x[0]*l1+t0*l3)*l1-exp(x[0]*l1+x[0]*l3)*l1-exp(t0*l1+x[0]*l3)*l3+exp(x[0]*l1+x[0]*l3)*l3)*462.535)/(-l1+l3))
-		+(1/((l1-l2)*(l1-l4)*(l2-l4)))*exp(-x[0]*(l1+l2+l4))*(-1+0.358798)*(-1+pn2)*(-exp(x[0]*(l1+l2)+t0*l4)*l1*(l1-l2)*l2+exp(x[0]*(l1+l2+l4))*(l1-l2)*(l1-l4)*(l2-l4)+exp(t0*l2+x[0]*(l1+l4))*l1*(l1-l4)*l4-exp(t0*l1+x[0]*(l2+l4))*l2*(l2-l4)*l4)*462.535;
+      	return (2370.66)
+		+(-exp(-x[0]*l1)*(exp(t0*l1)-exp(x[0]*l1))*480.824)
+		+((-exp(-x[0]*l1-x[0]*l2)*(-1+0.354911)*(exp(x[0]*l1+t0*l2)*l1-exp(x[0]*l1+x[0]*l2)*l1-exp(t0*l1+x[0]*l2)*l2+exp(x[0]*l1+x[0]*l2)*l2)*480.824)/(-l1+l2))
+		+((exp(-x[0]*l1-x[0]*l3)*(0.354911)*(exp(x[0]*l1+t0*l3)*l1-exp(x[0]*l1+x[0]*l3)*l1-exp(t0*l1+x[0]*l3)*l3+exp(x[0]*l1+x[0]*l3)*l3)*480.824)/(-l1+l3))
+		+(1/((l1-l2)*(l1-l4)*(l2-l4)))*exp(-x[0]*(l1+l2+l4))*(-1+0.354911)*(-1+pn2)*(-exp(x[0]*(l1+l2)+t0*l4)*l1*(l1-l2)*l2+exp(x[0]*(l1+l2+l4))*(l1-l2)*(l1-l4)*(l2-l4)+exp(t0*l2+x[0]*(l1+l4))*l1*(l1-l4)*l4-exp(t0*l1+x[0]*(l2+l4))*l2*(l2-l4)*l4)*480.824;
     }
     
   	if(x[0] >= tc+t0 && x[0] <= ta)
     {
-     	return (2283.59)
-		+(-exp(-x[0]*l1)*(exp(t0*l1)-exp((t0+tc)*l1))*462.535)
-		+((-exp(-x[0]*l1-x[0]*l2)*(-1+0.358798)*(-exp(x[0]*l1+t0*l2)*l1+exp(x[0]*l1+(t0+tc)*l2)*l1+exp(t0*l1+x[0]*l2)*l2-exp((t0+tc)*l1+x[0]*l2)*l2)*462.535)/(l1-l2))
-		+((exp(-x[0]*l1-x[0]*l3)*(0.358798)*(-exp(x[0]*l1+t0*l3)*l1+exp(x[0]*l1+(t0+tc)*l3)*l1+exp(t0*l1+x[0]*l3)*l3-exp((t0+tc)*l1+x[0]*l3)*l3)*462.535)/(l1-l3))
-		+((exp(-x[0]*(l1+l2+l4))*(-1+0.358798)*(-1+pn2)*(-exp(x[0]*(l1+l2)+t0*l4)*l1*(l1-l2)*l2+exp(x[0]*(l1+l2)+(t0+tc)*l4)*l1*(l1-l2)*l2+exp(t0*l2+x[0]*(l1+l4))*l1*(l1-l4)*l4-exp((t0+tc)*l2+x[0]*(l1+l4))*l1*(l1-l4)*l4-exp(t0*l1+x[0]*(l2+l4))*l2*(l2-l4)*l4+exp((t0+tc)*l1+x[0]*(l2+l4))*l2*(l2-l4)*l4)*462.535)/((l1-l2)*(l1-l4)*(l2-l4)));
+     	return (2370.66)
+		+(-exp(-x[0]*l1)*(exp(t0*l1)-exp((t0+tc)*l1))*480.824)
+		+((-exp(-x[0]*l1-x[0]*l2)*(-1+0.354911)*(-exp(x[0]*l1+t0*l2)*l1+exp(x[0]*l1+(t0+tc)*l2)*l1+exp(t0*l1+x[0]*l2)*l2-exp((t0+tc)*l1+x[0]*l2)*l2)*480.824)/(l1-l2))
+		+((exp(-x[0]*l1-x[0]*l3)*(0.354911)*(-exp(x[0]*l1+t0*l3)*l1+exp(x[0]*l1+(t0+tc)*l3)*l1+exp(t0*l1+x[0]*l3)*l3-exp((t0+tc)*l1+x[0]*l3)*l3)*480.824)/(l1-l3))
+		+((exp(-x[0]*(l1+l2+l4))*(-1+0.354911)*(-1+pn2)*(-exp(x[0]*(l1+l2)+t0*l4)*l1*(l1-l2)*l2+exp(x[0]*(l1+l2)+(t0+tc)*l4)*l1*(l1-l2)*l2+exp(t0*l2+x[0]*(l1+l4))*l1*(l1-l4)*l4-exp((t0+tc)*l2+x[0]*(l1+l4))*l1*(l1-l4)*l4-exp(t0*l1+x[0]*(l2+l4))*l2*(l2-l4)*l4+exp((t0+tc)*l1+x[0]*(l2+l4))*l2*(l2-l4)*l4)*480.824)/((l1-l2)*(l1-l4)*(l2-l4)));
     }
     
   	if(x[0] > ta)
@@ -39,7 +39,7 @@ Double_t bgd(Double_t *x, Double_t *par)
 	
 	if(0 < x[0] && x[0] < ta)
     {
-      	return (2283.59);
+      	return (2370.66);
     }
     
     return 0;
@@ -51,17 +51,17 @@ Double_t Bateman_A1(Double_t *x, Double_t *par)
 {  
 	if(x[0] < t0)
     {
-      	return (2283.59);
+      	return (2370.66);
     }
     
   	if(x[0] >= t0 && x[0] < tc+t0)
     {	
-      	return (2283.59)+(-exp(-x[0]*l1)*(exp(t0*l1)-exp(x[0]*l1))*462.535);
+      	return (2370.66)+(-exp(-x[0]*l1)*(exp(t0*l1)-exp(x[0]*l1))*480.824);
     }
     
   	if(x[0] >= tc+t0 && x[0] <= ta)
     {
-     	return (2283.59)+(-exp(-x[0]*l1)*(exp(t0*l1)-exp((t0+tc)*l1))*462.535);
+     	return (2370.66)+(-exp(-x[0]*l1)*(exp(t0*l1)-exp((t0+tc)*l1))*480.824);
     }
     
   	if(x[0] > ta)
@@ -77,17 +77,17 @@ Double_t Bateman_A2(Double_t *x, Double_t *par)
 {		
 	if(x[0] < t0)
     {
-      	return (2283.59);
+      	return (2370.66);
     }
     
   	if(x[0] >= t0 && x[0] < tc+t0)
     {	
-      	return (2283.59)+((-exp(-x[0]*l1-x[0]*l2)*(-1+0.358798)*(exp(x[0]*l1+t0*l2)*l1-exp(x[0]*l1+x[0]*l2)*l1-exp(t0*l1+x[0]*l2)*l2+exp(x[0]*l1+x[0]*l2)*l2)*462.535)/(-l1+l2));
+      	return (2370.66)+((-exp(-x[0]*l1-x[0]*l2)*(-1+0.354911)*(exp(x[0]*l1+t0*l2)*l1-exp(x[0]*l1+x[0]*l2)*l1-exp(t0*l1+x[0]*l2)*l2+exp(x[0]*l1+x[0]*l2)*l2)*480.824)/(-l1+l2));
     }
     
   	if(x[0] >= tc+t0 && x[0] <= ta)
     {	
-     	return (2283.59)+((-exp(-x[0]*l1-x[0]*l2)*(-1+0.358798)*(-exp(x[0]*l1+t0*l2)*l1+exp(x[0]*l1+(t0+tc)*l2)*l1+exp(t0*l1+x[0]*l2)*l2-exp((t0+tc)*l1+x[0]*l2)*l2)*462.535)/(l1-l2));
+     	return (2370.66)+((-exp(-x[0]*l1-x[0]*l2)*(-1+0.354911)*(-exp(x[0]*l1+t0*l2)*l1+exp(x[0]*l1+(t0+tc)*l2)*l1+exp(t0*l1+x[0]*l2)*l2-exp((t0+tc)*l1+x[0]*l2)*l2)*480.824)/(l1-l2));
     }
     
   	if(x[0] > ta)
@@ -102,17 +102,17 @@ Double_t Bateman_A3(Double_t *x, Double_t *par)
 {		
 	if(x[0] < t0)
     {
-      	return (2283.59);
+      	return (2370.66);
     }
     
   	if(x[0] >= t0 && x[0] < tc+t0)
     {	
-      	return (2283.59)+((exp(-x[0]*l1-x[0]*l3)*(0.358798)*(exp(x[0]*l1+t0*l3)*l1-exp(x[0]*l1+x[0]*l3)*l1-exp(t0*l1+x[0]*l3)*l3+exp(x[0]*l1+x[0]*l3)*l3)*462.535)/(-l1+l3));
+      	return (2370.66)+((exp(-x[0]*l1-x[0]*l3)*(0.354911)*(exp(x[0]*l1+t0*l3)*l1-exp(x[0]*l1+x[0]*l3)*l1-exp(t0*l1+x[0]*l3)*l3+exp(x[0]*l1+x[0]*l3)*l3)*480.824)/(-l1+l3));
     }
     
   	if(x[0] >= tc+t0 && x[0] <= ta)
     {	
-     	return (2283.59)+((exp(-x[0]*l1-x[0]*l3)*(0.358798)*(-exp(x[0]*l1+t0*l3)*l1+exp(x[0]*l1+(t0+tc)*l3)*l1+exp(t0*l1+x[0]*l3)*l3-exp((t0+tc)*l1+x[0]*l3)*l3)*462.535)/(l1-l3));
+     	return (2370.66)+((exp(-x[0]*l1-x[0]*l3)*(0.354911)*(-exp(x[0]*l1+t0*l3)*l1+exp(x[0]*l1+(t0+tc)*l3)*l1+exp(t0*l1+x[0]*l3)*l3-exp((t0+tc)*l1+x[0]*l3)*l3)*480.824)/(l1-l3));
     }
     
   	if(x[0] > ta)
@@ -127,17 +127,17 @@ Double_t Bateman_A4(Double_t *x, Double_t *par)
 {		
 	if(x[0] < t0)
     {
-      	return (2283.59);
+      	return (2370.66);
     }
     
   	if(x[0] >= t0 && x[0] < tc+t0)
     {	
-      	return (2283.59)+(1/((l1-l2)*(l1-l4)*(l2-l4)))*exp(-x[0]*(l1+l2+l4))*(-1+0.358798)*(-1+pn2)*(-exp(x[0]*(l1+l2)+t0*l4)*l1*(l1-l2)*l2+exp(x[0]*(l1+l2+l4))*(l1-l2)*(l1-l4)*(l2-l4)+exp(t0*l2+x[0]*(l1+l4))*l1*(l1-l4)*l4-exp(t0*l1+x[0]*(l2+l4))*l2*(l2-l4)*l4)*462.535;
+      	return (2370.66)+(1/((l1-l2)*(l1-l4)*(l2-l4)))*exp(-x[0]*(l1+l2+l4))*(-1+0.354911)*(-1+pn2)*(-exp(x[0]*(l1+l2)+t0*l4)*l1*(l1-l2)*l2+exp(x[0]*(l1+l2+l4))*(l1-l2)*(l1-l4)*(l2-l4)+exp(t0*l2+x[0]*(l1+l4))*l1*(l1-l4)*l4-exp(t0*l1+x[0]*(l2+l4))*l2*(l2-l4)*l4)*480.824;
     }
     
   	if(x[0] >= tc+t0 && x[0] <= ta)
     {	
-     	return (2283.59)+((exp(-x[0]*(l1+l2+l4))*(-1+0.358798)*(-1+pn2)*(-exp(x[0]*(l1+l2)+t0*l4)*l1*(l1-l2)*l2+exp(x[0]*(l1+l2)+(t0+tc)*l4)*l1*(l1-l2)*l2+exp(t0*l2+x[0]*(l1+l4))*l1*(l1-l4)*l4-exp((t0+tc)*l2+x[0]*(l1+l4))*l1*(l1-l4)*l4-exp(t0*l1+x[0]*(l2+l4))*l2*(l2-l4)*l4+exp((t0+tc)*l1+x[0]*(l2+l4))*l2*(l2-l4)*l4)*462.535)/((l1-l2)*(l1-l4)*(l2-l4)));
+     	return (2370.66)+((exp(-x[0]*(l1+l2+l4))*(-1+0.354911)*(-1+pn2)*(-exp(x[0]*(l1+l2)+t0*l4)*l1*(l1-l2)*l2+exp(x[0]*(l1+l2)+(t0+tc)*l4)*l1*(l1-l2)*l2+exp(t0*l2+x[0]*(l1+l4))*l1*(l1-l4)*l4-exp((t0+tc)*l2+x[0]*(l1+l4))*l1*(l1-l4)*l4-exp(t0*l1+x[0]*(l2+l4))*l2*(l2-l4)*l4+exp((t0+tc)*l1+x[0]*(l2+l4))*l2*(l2-l4)*l4)*480.824)/((l1-l2)*(l1-l4)*(l2-l4)));
     }
     
   	if(x[0] > ta)

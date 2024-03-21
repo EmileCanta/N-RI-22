@@ -285,27 +285,14 @@ void Sorter::FillSingleBranches()
         {
             fTetra_Time_single.push_back(raw_time / 1e9); //millisecond
             fTetra_Cycle.push_back(fCycle);
-
-            if(raw_det_nbr >= 1 && raw_det_nbr <= 2)
-            {
-                fTetra_Rings.push_back(1.);
-            }
-
-            if(raw_det_nbr >= 3 && raw_det_nbr <= 5)
-            {
-                fTetra_Rings.push_back(2.);
-            }
-
-            if(raw_det_nbr >= 6 && raw_det_nbr <= 8)
-            {
-                fTetra_Rings.push_back(3.);
-            }
-
-            if(raw_det_nbr >= 9 && raw_det_nbr <= 12)
-            {
-                fTetra_Rings.push_back(4.);
-            }
             
+            for(int i = 1; i <= 12; i++)
+            {
+                if(raw_det_nbr == i)
+                {
+                    fTetra_Rings.push_back(i);
+                }
+            }
         }
 
         else if(raw_det_nbr == 14)
@@ -729,7 +716,7 @@ void Sorter::Histogrammer(const char* OutputFileName)
     TH1D* FirstNeutronCellGroup = new TH1D("FirstNeutronCellGroup", "FirstNeutronCellGroup", 28, 0, 14);
     TH1D* SecondNeutronCellGroup = new TH1D("SecondNeutronCellGroup", "SecondNeutronCellGroup", 28, 0, 14);
 
-    TH1D* Tetra_Rings = new TH1D("Tetra_Rings", "Tetra_Rings", 10, 0, 5);
+    TH1D* Tetra_Rings = new TH1D("Tetra_Rings", "Tetra_Rings", 28, 0, 14);
 
     //Bidim
     TH2D* ESvsBTD = new TH2D("ESvsBTD", "ESvsBTD", 5000, 0, 10, 7000, 0, 7000);

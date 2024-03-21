@@ -1,4 +1,4 @@
-#include "Fitter84Ga.h"
+#include "Fitter125Ag.h"
 
 void Fitter(const char* inputFile, Double_t min, Double_t max)
 {
@@ -11,7 +11,7 @@ void Fitter(const char* inputFile, Double_t min, Double_t max)
 	TH1D *hist_tetra = (TH1D*)rootFile->Get("AlignedTetra_Time_single");
 
 	TF1 *FitBat_beta = new TF1("Bat_beta", Bat_beta, min, max, 3);
-	TF1 *FitBat_tetra = new TF1("Bat_tetra", Bat_tetra, min, max, 3);
+	TF1 *FitBat_tetra = new TF1("Bat_tetra", Bat_tetra, min, max, 2);
 
 	//FitBat_beta->FixParameter(1, 535*0.81);
 	//FitBat_beta->FixParameter(2, 0.364*0.81);
