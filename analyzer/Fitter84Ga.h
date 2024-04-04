@@ -27,6 +27,7 @@ Double_t l1 = 0.0071458472;
 Double_t l2 = 7.358250324e-4;
 Double_t l3 = 3.746741517e-4;
 Double_t l4 = 1.724246718e-4;
+Double_t l5 = 1.732867951e-4;
 
 Double_t pn2 = 0.102;
 
@@ -78,6 +79,7 @@ Double_t Bat_beta(Double_t *x_1, Double_t *par_1)
 		+(-exp(-x_1[0]*l1)*(exp(t0*l1)-exp(x_1[0]*l1))*par_1[1])
 		+((-exp(-x_1[0]*l1-x_1[0]*l2)*(-1+par_1[2])*(exp(x_1[0]*l1+t0*l2)*l1-exp(x_1[0]*l1+x_1[0]*l2)*l1-exp(t0*l1+x_1[0]*l2)*l2+exp(x_1[0]*l1+x_1[0]*l2)*l2)*par_1[1])/(-l1+l2))
 		+((exp(-x_1[0]*l1-x_1[0]*l3)*(par_1[2])*(exp(x_1[0]*l1+t0*l3)*l1-exp(x_1[0]*l1+x_1[0]*l3)*l1-exp(t0*l1+x_1[0]*l3)*l3+exp(x_1[0]*l1+x_1[0]*l3)*l3)*par_1[1])/(-l1+l3))
+		+((-exp(-x_1[0]*l1-x_1[0]*l5)*(par_1[3])*(exp(x_1[0]*l1+t0*l5)*l1-exp(x_1[0]*l1+x_1[0]*l5)*l1-exp(t0*l1+x_1[0]*l5)*l5+exp(x_1[0]*l1+x_1[0]*l5)*l5)*par_1[1])/(-l1+l5))
 		+(1/((l1-l2)*(l1-l4)*(l2-l4)))*exp(-x_1[0]*(l1+l2+l4))*(-1+par_1[2])*(-1+pn2)*(-exp(x_1[0]*(l1+l2)+t0*l4)*l1*(l1-l2)*l2+exp(x_1[0]*(l1+l2+l4))*(l1-l2)*(l1-l4)*(l2-l4)+exp(t0*l2+x_1[0]*(l1+l4))*l1*(l1-l4)*l4-exp(t0*l1+x_1[0]*(l2+l4))*l2*(l2-l4)*l4)*par_1[1];
     }
     
@@ -87,6 +89,7 @@ Double_t Bat_beta(Double_t *x_1, Double_t *par_1)
 		+(-exp(-x_1[0]*l1)*(exp(t0*l1)-exp((t0+tc)*l1))*par_1[1])
 		+((-exp(-x_1[0]*l1-x_1[0]*l2)*(-1+par_1[2])*(-exp(x_1[0]*l1+t0*l2)*l1+exp(x_1[0]*l1+(t0+tc)*l2)*l1+exp(t0*l1+x_1[0]*l2)*l2-exp((t0+tc)*l1+x_1[0]*l2)*l2)*par_1[1])/(l1-l2))
 		+((exp(-x_1[0]*l1-x_1[0]*l3)*(par_1[2])*(-exp(x_1[0]*l1+t0*l3)*l1+exp(x_1[0]*l1+(t0+tc)*l3)*l1+exp(t0*l1+x_1[0]*l3)*l3-exp((t0+tc)*l1+x_1[0]*l3)*l3)*par_1[1])/(l1-l3))
+		+((exp(-x_1[0]*l1-x_1[0]*l5)*(par_1[3])*(-exp(x_1[0]*l1+t0*l5)*l1+exp(x_1[0]*l1+(t0+tc)*l5)*l1+exp(t0*l1+x_1[0]*l5)*l5-exp((t0+tc)*l1+x_1[0]*l5)*l5)*par_1[1])/(l1-l5))
 		+((exp(-x_1[0]*(l1+l2+l4))*(-1+par_1[2])*(-1+pn2)*(-exp(x_1[0]*(l1+l2)+t0*l4)*l1*(l1-l2)*l2+exp(x_1[0]*(l1+l2)+(t0+tc)*l4)*l1*(l1-l2)*l2+exp(t0*l2+x_1[0]*(l1+l4))*l1*(l1-l4)*l4-exp((t0+tc)*l2+x_1[0]*(l1+l4))*l1*(l1-l4)*l4-exp(t0*l1+x_1[0]*(l2+l4))*l2*(l2-l4)*l4+exp((t0+tc)*l1+x_1[0]*(l2+l4))*l2*(l2-l4)*l4)*par_1[1])/((l1-l2)*(l1-l4)*(l2-l4)));
     }
     

@@ -1,23 +1,23 @@
-#include "Fitter82Ga.h"
+#include "Fitter125Ag.h"
 
 Double_t Bateman_tot(Double_t *x, Double_t *par)
 {
 	
 	if(x[0] < t0)
     {
-      	return (4.05266);
+      	return (38.6415);
     }
     
   	if(x[0] >= t0 && x[0] < tc+t0)
     {	
-      	return (4.05266)
-		+(-exp(-x[0]*l1)*(exp(t0*l1)-exp(x[0]*l1))*204.957);
+      	return (38.6415)
+		+(-exp(-x[0]*l1)*(exp(t0*l1)-exp(x[0]*l1))*8.1046);
     }
     
   	if(x[0] >= tc+t0 && x[0] <= ta)
     {
-     	return (4.05266)
-		+(-exp(-x[0]*l1)*(exp(t0*l1)-exp((t0+tc)*l1))*204.957);
+     	return (38.6415)
+		+(-exp(-x[0]*l1)*(exp(t0*l1)-exp((t0+tc)*l1))*8.1046);
     }
     
   	if(x[0] > ta)
@@ -33,7 +33,7 @@ Double_t bgd(Double_t *x, Double_t *par)
 	
 	if(0 < x[0] && x[0] < ta)
     {
-      	return (4.05266);
+      	return (38.6415);
     }
     
     return 0;
@@ -45,17 +45,17 @@ Double_t Bateman_A1(Double_t *x, Double_t *par)
 {  
 	if(x[0] < t0)
     {
-      	return (4.05266);
+      	return (38.6415);
     }
     
   	if(x[0] >= t0 && x[0] < tc+t0)
     {	
-      	return (4.05266)+(-exp(-x[0]*l1)*(exp(t0*l1)-exp(x[0]*l1))*204.957);
+      	return (38.6415)+(-exp(-x[0]*l1)*(exp(t0*l1)-exp(x[0]*l1))*8.1046);
     }
     
   	if(x[0] >= tc+t0 && x[0] <= ta)
     {
-     	return (4.05266)+(-exp(-x[0]*l1)*(exp(t0*l1)-exp((t0+tc)*l1))*204.957);
+     	return (38.6415)+(-exp(-x[0]*l1)*(exp(t0*l1)-exp((t0+tc)*l1))*8.1046);
     }
     
   	if(x[0] > ta)
@@ -66,20 +66,20 @@ Double_t Bateman_A1(Double_t *x, Double_t *par)
     return 0;
 }
 
-void FitTetra82Ga()
+void FitTetra125Ag()
 {
 	TCanvas *c1 = new TCanvas();
 	
-	TFile *input = new TFile("/Users/cantacuzene/data/n-ri-22/runs/sorted_runs/RUN121.root");
+	TFile *input = new TFile("/Users/cantacuzene/data/n-ri-22/runs/sorted_runs/125Ag/AllRuns.root");
 	
 	gStyle->SetOptStat(0);
 	gStyle->SetOptFit(0001);
 	
 	TH1D *hist_neutron = (TH1D*)input->Get("AlignedTetra_Time_single");
   	
-  	TF1 *FitBatemanTot = new TF1("Bateman_tot", Bateman_tot, 0.0e3, 6.5e3);
-  	TF1 *FitBgd = new TF1("bgd", bgd,  0.0e3, 6.5e3);
-  	TF1 *FitA1 = new TF1("Bateman_A1", Bateman_A1,  0.0e3, 6.5e3);
+  	TF1 *FitBatemanTot = new TF1("Bateman_tot", Bateman_tot, 0.0e3, 4.5e3);
+  	TF1 *FitBgd = new TF1("bgd", bgd,  0.0e3, 4.5e3);
+  	TF1 *FitA1 = new TF1("Bateman_A1", Bateman_A1,  0.0e3, 4.5e3);
   	
   	hist_neutron->Draw();
 
@@ -101,13 +101,12 @@ void FitTetra82Ga()
     legend->AddEntry(FitA1,"Galium 84","l");
     legend->Draw();
   	
-  	Double_t IntA1 = FitA1->Integral(0.0e3, 6.5e3);
-  	Double_t IntBgd = FitBgd->Integral(0.0e3, 6.5e3);
+  	Double_t IntA1 = FitA1->Integral(0.0e3, 4.5e3);
+  	Double_t IntBgd = FitBgd->Integral(0.0e3, 4.5e3);
   	
   	cout << "IntegralBgd:" << IntBgd << endl;
 	
   	cout << "IntegralA1-Bgd:" << (IntA1 - IntBgd) << endl;
-  	
 	cout << "Total integral with background:" << ((IntA1 - IntBgd) + IntBgd) << endl;
 	cout << "Total integral without background:" << ((IntA1 - IntBgd)) << endl;
   	

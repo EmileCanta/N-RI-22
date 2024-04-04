@@ -23,7 +23,7 @@ Sorter::Sorter(const char* InputFileName, const char* OutputFileName, Double_t c
     FillBetaXnCoincBranches(200e6);
     FillBetaXnBackwardCoincBranches(200e6);
 
-    FillnnCoincBranches(200e6);
+    FillnnCoincBranches(1000e6);
 
     output_file->Close();
 
@@ -896,6 +896,37 @@ void Sorter::Histogrammer(const char* OutputFileName)
 
             CellGroups->Fill(ffFirstNeutronCellGroup->at(j), ffSecondNeutronCellGroup->at(j));
         }
+    }
+
+    //Normalization of cell groups
+
+    Tetra_Rings->SetBinContent(3,Tetra_Rings->GetBinContent(3)/(7.*28.6));
+    Tetra_Rings->SetBinContent(5,Tetra_Rings->GetBinContent(5)/(4.*29.7));
+    Tetra_Rings->SetBinContent(7,Tetra_Rings->GetBinContent(7)/(7.*34.3));
+    Tetra_Rings->SetBinContent(9,Tetra_Rings->GetBinContent(9)/(7.3*34.1));
+    Tetra_Rings->SetBinContent(11,Tetra_Rings->GetBinContent(11)/(3.*34.7));
+    Tetra_Rings->SetBinContent(13,Tetra_Rings->GetBinContent(13)/(7.*35.6));
+    Tetra_Rings->SetBinContent(15,Tetra_Rings->GetBinContent(15)/(7.*36.1));
+    Tetra_Rings->SetBinContent(17,Tetra_Rings->GetBinContent(17)/(8.*34.75));
+    Tetra_Rings->SetBinContent(19,Tetra_Rings->GetBinContent(19)/(8.*37.9));
+    Tetra_Rings->SetBinContent(21,Tetra_Rings->GetBinContent(21)/(7.*35.1));
+    Tetra_Rings->SetBinContent(23,Tetra_Rings->GetBinContent(23)/(7.*35));
+    Tetra_Rings->SetBinContent(25,Tetra_Rings->GetBinContent(25)/(7.*34.3));
+
+    for(int i = 2; i <= 13; i++)
+    {
+        CellGroups->SetBinContent(2*i-1,3,CellGroups->GetBinContent(2*i-1,3)/(7.*28.6));
+        CellGroups->SetBinContent(2*i-1,5,CellGroups->GetBinContent(2*i-1,5)/(4.*29.7));
+        CellGroups->SetBinContent(2*i-1,7,CellGroups->GetBinContent(2*i-1,7)/(7.*34.3));
+        CellGroups->SetBinContent(2*i-1,9,CellGroups->GetBinContent(2*i-1,9)/(7.3*34.1));
+        CellGroups->SetBinContent(2*i-1,11,CellGroups->GetBinContent(2*i-1,11)/(3.*34.7));
+        CellGroups->SetBinContent(2*i-1,13,CellGroups->GetBinContent(2*i-1,13)/(7.*35.6));
+        CellGroups->SetBinContent(2*i-1,15,CellGroups->GetBinContent(2*i-1,15)/(7.*36.1));
+        CellGroups->SetBinContent(2*i-1,17,CellGroups->GetBinContent(2*i-1,17)/(8.*34.75));
+        CellGroups->SetBinContent(2*i-1,19,CellGroups->GetBinContent(2*i-1,19)/(8.*37.9));
+        CellGroups->SetBinContent(2*i-1,21,CellGroups->GetBinContent(2*i-1,21)/(7.*35.1));
+        CellGroups->SetBinContent(2*i-1,23,CellGroups->GetBinContent(2*i-1,23)/(7.*35));
+        CellGroups->SetBinContent(2*i-1,25,CellGroups->GetBinContent(2*i-1,25)/(7.*34.3));
     }
 
     file->Write();
