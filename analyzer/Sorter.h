@@ -87,8 +87,11 @@ class Sorter{
 	std::vector<Double_t> fStoring3n_Time;
 	std::vector<Double_t> fStoring3n_TimeDiff;
 
-	std::vector<Double_t> fnn_TimeDiff;
-	std::vector<Double_t> fnn_Time_coinc;
+	std::vector<Double_t> f2n_TimeDiff;
+	std::vector<Double_t> f2n_Time_coinc;
+
+	std::vector<Double_t> f1n_Time;
+	std::vector<Double_t> f1n_Cycle;
 
 	std::vector<Double_t> fStoringFirstNeutronCellGroup;
 	std::vector<Double_t> fStoringSecondNeutronCellGroup;
@@ -124,11 +127,12 @@ class Sorter{
 
 	virtual void SetTreesAndBranches(const char*);
 	virtual void FillSingleBranches();
-	virtual void FillTetraCoincBranches(Double_t);
-	virtual void FillBetaCoincBranches(Double_t);
-	virtual void FillBetaXnCoincBranches(Double_t);
-	virtual void FillBetaXnBackwardCoincBranches(Double_t);
-	virtual void FillnnCoincBranches(Double_t);
+	virtual void FillNeutronGammaCoincBranches(Double_t);
+	virtual void FillBetaGammaCoincBranches(Double_t);
+	virtual void FillBetaNeutronCoincBranches(Double_t);
+	virtual void FillBetaNeutronBackwardCoincBranches(Double_t);
+	virtual void FillNeutronNeutronCoincBranches(Double_t);
+	virtual void FillOneNeutronBranches(Double_t);
 	virtual Double_t Ge_alignement(UInt_t);
 	virtual void ResetVar();
 	virtual void ClearVectors();

@@ -5,21 +5,21 @@ Double_t Bateman_tot(Double_t *x, Double_t *par)
 	
 	if(x[0] < t0)
     {
-      	return (171.697);
+      	return (6.03726);
     }
     
   	if(x[0] >= t0 && x[0] < tc+t0)
     {	
-      	return (171.697)
-		+(-exp(-x[0]*l1)*(exp(t0*l1)-exp(x[0]*l1))*111.943)
-		+((-exp(-x[0]*l1-x[0]*l2)*(-1+0.752877)*(exp(x[0]*l1+t0*l2)*l1-exp(x[0]*l1+x[0]*l2)*l1-exp(t0*l1+x[0]*l2)*l2+exp(x[0]*l1+x[0]*l2)*l2)*111.943)/(-l1+l2));
+      	return (6.03726)
+		+(-exp(-x[0]*l1)*(exp(t0*l1)-exp(x[0]*l1))*3.08111);
+		//+((-exp(-x[0]*l1-x[0]*l2)*(-1+0.752942)*(exp(x[0]*l1+t0*l2)*l1-exp(x[0]*l1+x[0]*l2)*l1-exp(t0*l1+x[0]*l2)*l2+exp(x[0]*l1+x[0]*l2)*l2)*3.08111)/(-l1+l2));
     }
     
   	if(x[0] >= tc+t0 && x[0] <= ta)
     {
-     	return (171.697)
-		+(-exp(-x[0]*l1)*(exp(t0*l1)-exp((t0+tc)*l1))*111.943)
-		+((-exp(-x[0]*l1-x[0]*l2)*(-1+0.752877)*(-exp(x[0]*l1+t0*l2)*l1+exp(x[0]*l1+(t0+tc)*l2)*l1+exp(t0*l1+x[0]*l2)*l2-exp((t0+tc)*l1+x[0]*l2)*l2)*111.943)/(l1-l2));
+     	return (6.03726)
+		+(-exp(-x[0]*l1)*(exp(t0*l1)-exp((t0+tc)*l1))*3.08111);
+		//+((-exp(-x[0]*l1-x[0]*l2)*(-1+0.752942)*(-exp(x[0]*l1+t0*l2)*l1+exp(x[0]*l1+(t0+tc)*l2)*l1+exp(t0*l1+x[0]*l2)*l2-exp((t0+tc)*l1+x[0]*l2)*l2)*3.08111)/(l1-l2));
     }
     
   	if(x[0] > ta)
@@ -35,7 +35,7 @@ Double_t bgd(Double_t *x, Double_t *par)
 	
 	if(0 < x[0] && x[0] < ta)
     {
-      	return (171.697);
+      	return (6.03726);
     }
     
     return 0;
@@ -47,17 +47,17 @@ Double_t Bateman_A1(Double_t *x, Double_t *par)
 {  
 	if(x[0] < t0)
     {
-      	return (171.697);
+      	return (6.03726);
     }
     
   	if(x[0] >= t0 && x[0] < tc+t0)
     {	
-      	return (171.697)+(-exp(-x[0]*l1)*(exp(t0*l1)-exp(x[0]*l1))*111.943);
+      	return (6.03726)+(-exp(-x[0]*l1)*(exp(t0*l1)-exp(x[0]*l1))*3.08111);
     }
     
   	if(x[0] >= tc+t0 && x[0] <= ta)
     {
-     	return (171.697)+(-exp(-x[0]*l1)*(exp(t0*l1)-exp((t0+tc)*l1))*111.943);
+     	return (6.03726)+(-exp(-x[0]*l1)*(exp(t0*l1)-exp((t0+tc)*l1))*3.08111);
     }
     
   	if(x[0] > ta)
@@ -72,17 +72,17 @@ Double_t Bateman_A2(Double_t *x, Double_t *par)
 {  
 	if(x[0] < t0)
     {
-      	return (171.697);
+      	return (6.03726);
     }
     
   	if(x[0] >= t0 && x[0] < tc+t0)
     {	
-      	return (171.697)+((-exp(-x[0]*l1-x[0]*l2)*(-1+0.752877)*(exp(x[0]*l1+t0*l2)*l1-exp(x[0]*l1+x[0]*l2)*l1-exp(t0*l1+x[0]*l2)*l2+exp(x[0]*l1+x[0]*l2)*l2)*111.943)/(-l1+l2));
+      	return (6.03726)+((-exp(-x[0]*l1-x[0]*l2)*(-1+0.752942)*(exp(x[0]*l1+t0*l2)*l1-exp(x[0]*l1+x[0]*l2)*l1-exp(t0*l1+x[0]*l2)*l2+exp(x[0]*l1+x[0]*l2)*l2)*3.08111)/(-l1+l2));
     }
     
   	if(x[0] >= tc+t0 && x[0] <= ta)
     {
-     	return (171.697)+((-exp(-x[0]*l1-x[0]*l2)*(-1+0.752877)*(-exp(x[0]*l1+t0*l2)*l1+exp(x[0]*l1+(t0+tc)*l2)*l1+exp(t0*l1+x[0]*l2)*l2-exp((t0+tc)*l1+x[0]*l2)*l2)*111.943)/(l1-l2));
+     	return (6.03726)+((-exp(-x[0]*l1-x[0]*l2)*(-1+0.752942)*(-exp(x[0]*l1+t0*l2)*l1+exp(x[0]*l1+(t0+tc)*l2)*l1+exp(t0*l1+x[0]*l2)*l2-exp((t0+tc)*l1+x[0]*l2)*l2)*3.08111)/(l1-l2));
     }
     
   	if(x[0] > ta)
@@ -102,7 +102,7 @@ void FitTetra84Ga()
 	gStyle->SetOptStat(0);
 	gStyle->SetOptFit(0001);
 	
-	TH1D *hist_neutron = (TH1D*)input->Get("AlignedTetra_Time_single");
+	TH1D *hist_neutron = (TH1D*)input->Get("TwoNeutrons_Time_coinc");
   	
   	TF1 *FitBatemanTot = new TF1("Bateman_tot", Bateman_tot, 0.0e3, 3.3e3);
   	TF1 *FitBgd = new TF1("bgd", bgd,  0.0e3, 3.3e3);

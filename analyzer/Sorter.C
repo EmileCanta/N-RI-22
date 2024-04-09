@@ -16,14 +16,16 @@ Sorter::Sorter(const char* InputFileName, const char* OutputFileName, Double_t c
 
     FillSingleBranches();
 
-    FillTetraCoincBranches(200e6);
+    FillNeutronGammaCoincBranches(200e6);
 
-    FillBetaCoincBranches(10e6);
+    FillBetaGammaCoincBranches(10e6);
 
-    FillBetaXnCoincBranches(200e6);
-    FillBetaXnBackwardCoincBranches(200e6);
+    FillBetaNeutronCoincBranches(200e6);
+    FillBetaNeutronBackwardCoincBranches(200e6);
 
-    FillnnCoincBranches(1000e6);
+    FillNeutronNeutronCoincBranches(200e6);
+
+    FillOneNeutronBranches(200e6);
 
     output_file->Close();
 
@@ -77,6 +79,9 @@ void Sorter::ResetVar()
     fGe_E = 0.;
     fGe_Id = 0;
     fGe_Time = 0.;
+
+    fCoding = 0;
+    fStatus = -10;
 }
 
 //******************************************************************************
@@ -124,8 +129,11 @@ void Sorter::ClearVectors()
     fStoring3n_Time.clear();
     fStoring3n_TimeDiff.clear();
 
-    fnn_TimeDiff.clear();
-    fnn_Time_coinc.clear();
+    f1n_Time.clear();
+    f1n_Cycle.clear();
+
+    f2n_TimeDiff.clear();
+    f2n_Time_coinc.clear();
 
     fStoringFirstNeutronCellGroup.clear();
     fStoringSecondNeutronCellGroup.clear();
@@ -230,7 +238,9 @@ void Sorter::SetTreesAndBranches(const char* OutputFileName)
     output_tree_coinc->Branch("Beta1n_Time_coinc", &fBeta1n_Time_coinc);
     output_tree_coinc->Branch("Beta2n_Time_coinc", &fBeta2n_Time_coinc);
     output_tree_coinc->Branch("Beta3n_Time_coinc", &fBeta3n_Time_coinc);
-    output_tree_coinc->Branch("nn_Time_coinc", &fnn_Time_coinc);
+    output_tree_coinc->Branch("TwoNeutrons_Time_coinc", &f2n_Time_coinc);
+    output_tree_coinc->Branch("OneNeutron_Time", &f1n_Time);
+    output_tree_coinc->Branch("OneNeutron_Cycle", &f1n_Cycle);
     output_tree_coinc->Branch("Beta1nBackward_Time_coinc", &fBeta1nBackward_Time_coinc);
     output_tree_coinc->Branch("Beta2nBackward_Time_coinc", &fBeta2nBackward_Time_coinc);
     
@@ -243,7 +253,7 @@ void Sorter::SetTreesAndBranches(const char* OutputFileName)
     output_tree_coinc->Branch("Beta1nBackward_TimeDiff", &fBeta1nBackward_TimeDiff);
     output_tree_coinc->Branch("Beta2nBackward_TimeDiffFirst", &fBeta2nBackward_TimeDiffFirst);
     output_tree_coinc->Branch("Beta2nBackward_TimeDiffSecond", &fBeta2nBackward_TimeDiffSecond);
-    output_tree_coinc->Branch("nn_TimeDiff", &fnn_TimeDiff);
+    output_tree_coinc->Branch("TwoNeutrons_TimeDiff", &f2n_TimeDiff);
 
     //Raw index
     output_tree_coinc->Branch("GeTetra_Index", &fGeTetra_Index);
@@ -264,6 +274,8 @@ void Sorter::FillSingleBranches()
 
     Double_t last_time = 0.;
     Double_t fCycle = 0.;
+
+    ResetVar();
     
     for(fEntry = 0; fEntry < fEntries; fEntry++)
 	{
@@ -316,9 +328,9 @@ void Sorter::FillSingleBranches()
 //******************************************************************************
 //******************************************************************************
 
-void Sorter::FillTetraCoincBranches(Double_t coincwindow)
+void Sorter::FillNeutronGammaCoincBranches(Double_t coincwindow)
 {
-    std::cout << "Sorting tetra coinc data" << std::endl;
+    std::cout << "Sorting neutron-gamma coinc data" << std::endl;
     
     lastevent = 0;
 
@@ -371,9 +383,9 @@ void Sorter::FillTetraCoincBranches(Double_t coincwindow)
 //******************************************************************************
 //******************************************************************************
 
-void Sorter::FillBetaCoincBranches(Double_t coincwindow)
+void Sorter::FillBetaGammaCoincBranches(Double_t coincwindow)
 {
-    std::cout << "Sorting beta coinc data" << std::endl;
+    std::cout << "Sorting beta-gamma coinc data" << std::endl;
     
     Int_t lastevent = 0;
 
@@ -426,9 +438,9 @@ void Sorter::FillBetaCoincBranches(Double_t coincwindow)
 //******************************************************************************
 //******************************************************************************
 
-void Sorter::FillBetaXnCoincBranches(Double_t coincwindow)
+void Sorter::FillBetaNeutronCoincBranches(Double_t coincwindow)
 {
-    std::cout << "Sorting beta-Xn coinc data" << std::endl;
+    std::cout << "Sorting beta-neutron coinc data" << std::endl;
     
     lastevent = 0;
 
@@ -457,6 +469,8 @@ void Sorter::FillBetaXnCoincBranches(Double_t coincwindow)
                 raw_data_tree->GetEntry(fEntry + eventafter++);
 
                 if(fEntry + eventafter > fEntries) break;
+                if(fCoding != raw_coding) break;
+                if(fStatus != GetStatus(raw_time)) break;
                 
                 if(TMath::Abs(raw_time - fBeta_Time) > coincwindow) continue;
                 if(TMath::Abs(raw_time - fBeta_Time) < coincwindow)
@@ -513,9 +527,9 @@ void Sorter::FillBetaXnCoincBranches(Double_t coincwindow)
 //******************************************************************************
 //******************************************************************************
 
-void Sorter::FillBetaXnBackwardCoincBranches(Double_t coincwindow)
+void Sorter::FillBetaNeutronBackwardCoincBranches(Double_t coincwindow)
 {
-    std::cout << "Sorting beta-Xn backward coinc data" << std::endl;
+    std::cout << "Sorting beta-neutron backward coinc data" << std::endl;
     
     lastevent = 0;
 
@@ -544,6 +558,8 @@ void Sorter::FillBetaXnBackwardCoincBranches(Double_t coincwindow)
                 raw_data_tree->GetEntry(fEntry - eventafter++);
 
                 if(fEntry - eventafter < 0) break;
+                if(fCoding != raw_coding) break;
+                if(fStatus != GetStatus(raw_time)) break;
                 
                 if(TMath::Abs(raw_time - fBeta_Time) > coincwindow) continue;
                 if(TMath::Abs(raw_time - fBeta_Time) < coincwindow)
@@ -595,10 +611,10 @@ void Sorter::FillBetaXnBackwardCoincBranches(Double_t coincwindow)
 //******************************************************************************
 //******************************************************************************
 
-void Sorter::FillnnCoincBranches(Double_t coincwindow)
+void Sorter::FillNeutronNeutronCoincBranches(Double_t coincwindow)
 {
-    std::cout << "Sorting n-n coinc data" << std::endl;
-    
+    std::cout << "Sorting neutron-neutron coinc data" << std::endl;
+
     lastevent = 0;
 
     ResetVar();
@@ -617,19 +633,21 @@ void Sorter::FillnnCoincBranches(Double_t coincwindow)
 
         if(fTetra_Id >= 1 && fTetra_Id <= 12)
         {  
-            fStoringFirstNeutronCellGroup.push_back(fTetra_Id);
-
             if(fEntry < lastevent) continue;
+
+            fStoringFirstNeutronCellGroup.push_back(fTetra_Id);
             
             while(TMath::Abs(raw_time - fTetra_Time) < coincwindow)
             {
                 raw_data_tree->GetEntry(fEntry + eventafter++);
 
                 if(fEntry + eventafter > fEntries) break;
+                if(fCoding != raw_coding) break;
+                if(fStatus != GetStatus(raw_time)) break;
                 
                 if(TMath::Abs(raw_time - fTetra_Time) > coincwindow) continue;
                 if(TMath::Abs(raw_time - fTetra_Time) < coincwindow)
-                {   
+                {
                     if(raw_det_nbr >= 1 && raw_det_nbr <= 12)
                     {
                         if(TMath::Abs(raw_time - fTetra_Time != 0)) 
@@ -638,8 +656,8 @@ void Sorter::FillnnCoincBranches(Double_t coincwindow)
 
                             if(neutcount == 1)
                             {
-                                fStoring1n_Time.push_back(fTetra_Time / 1e9);
-                                fStoring1n_TimeDiff.push_back(TMath::Abs(raw_time - fTetra_Time) / 1e6);
+                                fStoring2n_Time.push_back(raw_time / 1e9);
+                                fStoring2n_TimeDiff.push_back(TMath::Abs(raw_time - fTetra_Time) / 1e6);
                                 fStoringSecondNeutronCellGroup.push_back(raw_det_nbr);
                             }
                         }
@@ -649,12 +667,77 @@ void Sorter::FillnnCoincBranches(Double_t coincwindow)
 
             if(neutcount == 1)
             {
-                fnn_TimeDiff.push_back(fStoring1n_TimeDiff.front());
-                fnn_Time_coinc.push_back(fStoring1n_Time.front());
+                f2n_TimeDiff.push_back(fStoring2n_TimeDiff.front());
+                f2n_Time_coinc.push_back(fStoring2n_Time.front());
 
                 fFirstNeutronCellGroup.push_back(fStoringFirstNeutronCellGroup.front());
                 fSecondNeutronCellGroup.push_back(fStoringSecondNeutronCellGroup.front());
             }
+
+	    lastevent = fEntry + eventafter;
+	    
+	    output_tree_coinc->Fill();
+        }
+    }
+}
+
+//******************************************************************************
+//******************************************************************************
+
+void Sorter::FillOneNeutronBranches(Double_t coincwindow)
+{
+    std::cout << "Sorting one-neutron coinc data" << std::endl;
+
+    Double_t last_time = 0.;
+    Double_t fCycle = 0.;
+    
+    lastevent = 0;
+
+    ResetVar();
+
+	for(fEntry = 0; fEntry < fEntries; fEntry++)
+	{
+        raw_data_tree->GetEntry(fEntry);
+
+        if(fEntry == 0)
+        {
+            last_time = raw_time;
+            fCycle = 0;
+        }
+
+        if(raw_time - last_time < 0) fCycle++;
+        
+        last_time = raw_time;
+
+        ClearVectors();
+        
+        SetVar(raw_det_nbr);
+        
+        eventafter = 0;
+
+        if(fTetra_Id >= 1 && fTetra_Id <= 12)
+        {  
+            if(fEntry < lastevent) continue;    
+            
+            while(TMath::Abs(raw_time - fTetra_Time) < coincwindow)
+            {
+                if(raw_det_nbr >= 1 && raw_det_nbr <= 12 && TMath::Abs(raw_time - fTetra_Time != 0))
+                {   
+                    break;
+                }
+
+                raw_data_tree->GetEntry(fEntry + eventafter++);
+
+                if(fEntry + eventafter > fEntries) break;
+                if(fCoding != raw_coding) break;
+                if(fStatus != GetStatus(raw_time)) break;
+                
+                if(TMath::Abs(raw_time - fTetra_Time) > coincwindow) 
+                {
+                    f1n_Time.push_back(fTetra_Time / 1e9);
+                    f1n_Cycle.push_back(fCycle);
+                }
+	        }
 
 	    lastevent = fEntry + eventafter;
 	    
@@ -699,14 +782,16 @@ void Sorter::Histogrammer(const char* OutputFileName)
     TH1D* Beta1nBackward_TimeDiff = new TH1D("Beta1nBackward_TimeDiff", "Beta1nBackward_TimeDiff", 20000, -2000, 2000);
     TH1D* Beta2nBackward_TimeDiffFirst = new TH1D("Beta2nBackward_TimeDiffFirst", "Beta2nBackward_TimeDiffFirst", 20000, -2000, 2000);
     TH1D* Beta2nBackward_TimeDiffSecond = new TH1D("Beta2nBackward_TimeDiffSecond", "Beta2nBackward_TimeDiffSecond", 20000, -2000, 2000);
-    TH1D* nn_TimeDiff = new TH1D("nn_TimeDiff", "nn_TimeDiff", 10000, 0, 2000);
+    TH1D* TwoNeutrons_TimeDiff = new TH1D("TwoNeutrons_TimeDiff", "TwoNeutrons_TimeDiff", 10000, 0, 2000);
 
     TH1D* GeBeta_Time_coinc = new TH1D("GeBeta_Time_coinc","GeBeta_Time_coinc", 30000, 0, 30000);
     TH1D* GeTetra_Time_coinc = new TH1D("GeTetra_Time_coinc","GeTetra_Time_coinc", 30000, 0, 30000);
     TH1D* Beta1n_Time_coinc = new TH1D("Beta1n_Time_coinc","Beta1n_Time_coinc", 30000, 0, 30000);
     TH1D* Beta2n_Time_coinc = new TH1D("Beta2n_Time_coinc","Beta2n_Time_coinc", 30000, 0, 30000);
     TH1D* Beta3n_Time_coinc = new TH1D("Beta3n_Time_coinc","Beta3n_Time_coinc", 30000, 0, 30000);
-    TH1D* nn_Time_coinc = new TH1D("nn_Time_coinc", "nn_Time_coinc", 30000, 0, 30000);
+    TH1D* TwoNeutrons_Time_coinc = new TH1D("TwoNeutrons_Time_coinc", "TwoNeutrons_Time_coinc", 30000, 0, 30000);
+    TH1D* OneNeutron_Time = new TH1D("OneNeutron_Time", "OneNeutron_Time", 30000, 0, 30000);
+    TH1D* OneNeutron_Cycle = new TH1D("OneNeutron_Cycle", "OneNeutron_Cycle", 1000, 0, 1000);
     TH1D* Beta1nBackward_Time_coinc = new TH1D("Beta1nBackward_Time_coinc","Beta1nBackward_Time_coinc", 30000, 0, 30000);
     TH1D* Beta2nBackward_Time_coinc = new TH1D("Beta2nBackward_Time_coinc","Beta2nBackward_Time_coinc", 30000, 0, 30000);
 
@@ -742,14 +827,16 @@ void Sorter::Histogrammer(const char* OutputFileName)
     std::vector<Double_t> *ffBeta1nBackward_TimeDiff = 0;
     std::vector<Double_t> *ffBeta2nBackward_TimeDiffFirst = 0;
     std::vector<Double_t> *ffBeta2nBackward_TimeDiffSecond = 0;
-    std::vector<Double_t> *ffnn_TimeDiff = 0;
+    std::vector<Double_t> *ff2n_TimeDiff = 0;
 
     std::vector<Double_t> *ffGeBeta_Time_coinc = 0;
     std::vector<Double_t> *ffGeTetra_Time_coinc = 0;
     std::vector<Double_t> *ffBeta1n_Time_coinc = 0;
     std::vector<Double_t> *ffBeta2n_Time_coinc = 0;
     std::vector<Double_t> *ffBeta3n_Time_coinc = 0;
-    std::vector<Double_t> *ffnn_Time_coinc = 0;
+    std::vector<Double_t> *ff2n_Time_coinc = 0;
+    std::vector<Double_t> *ff1n_Time = 0;
+    std::vector<Double_t> *ff1n_Cycle = 0;
     std::vector<Double_t> *ffBeta1nBackward_Time_coinc = 0;
     std::vector<Double_t> *ffBeta2nBackward_Time_coinc = 0;
 
@@ -781,14 +868,16 @@ void Sorter::Histogrammer(const char* OutputFileName)
     tcoinc->SetBranchAddress("Beta1nBackward_TimeDiff",&ffBeta1nBackward_TimeDiff);
     tcoinc->SetBranchAddress("Beta2nBackward_TimeDiffFirst",&ffBeta2nBackward_TimeDiffFirst);
     tcoinc->SetBranchAddress("Beta2nBackward_TimeDiffSecond",&ffBeta2nBackward_TimeDiffSecond);
-    tcoinc->SetBranchAddress("nn_TimeDiff",&ffnn_TimeDiff);
+    tcoinc->SetBranchAddress("TwoNeutrons_TimeDiff",&ff2n_TimeDiff);
 
     tcoinc->SetBranchAddress("GeBeta_Time_coinc",&ffGeBeta_Time_coinc);
     tcoinc->SetBranchAddress("GeTetra_Time_coinc",&ffGeTetra_Time_coinc);
     tcoinc->SetBranchAddress("Beta1n_Time_coinc",&ffBeta1n_Time_coinc);
     tcoinc->SetBranchAddress("Beta2n_Time_coinc",&ffBeta2n_Time_coinc);
     tcoinc->SetBranchAddress("Beta3n_Time_coinc",&ffBeta3n_Time_coinc);
-    tcoinc->SetBranchAddress("nn_Time_coinc",&ffnn_Time_coinc);
+    tcoinc->SetBranchAddress("TwoNeutrons_Time_coinc",&ff2n_Time_coinc);
+    tcoinc->SetBranchAddress("OneNeutron_Time",&ff1n_Time);
+    tcoinc->SetBranchAddress("OneNeutron_Cycle",&ff1n_Cycle);
     tcoinc->SetBranchAddress("Beta1nBackward_Time_coinc",&ffBeta1nBackward_Time_coinc);
     tcoinc->SetBranchAddress("Beta2nBackward_Time_coinc",&ffBeta2nBackward_Time_coinc);
 
@@ -886,15 +975,21 @@ void Sorter::Histogrammer(const char* OutputFileName)
             Beta3n_Time_coinc->Fill(ffBeta3n_Time_coinc->at(j));
         }
 
-        for(ULong_t j = 0; j < ffnn_TimeDiff->size(); ++j)
+        for(ULong_t j = 0; j < ff2n_TimeDiff->size(); ++j)
         {
-            nn_TimeDiff->Fill(ffnn_TimeDiff->at(j));
-            nn_Time_coinc->Fill(ffnn_Time_coinc->at(j));
+            TwoNeutrons_TimeDiff->Fill(ff2n_TimeDiff->at(j));
+            TwoNeutrons_Time_coinc->Fill(ff2n_Time_coinc->at(j));
 
             FirstNeutronCellGroup->Fill(ffFirstNeutronCellGroup->at(j));
             SecondNeutronCellGroup->Fill(ffSecondNeutronCellGroup->at(j));
 
             CellGroups->Fill(ffFirstNeutronCellGroup->at(j), ffSecondNeutronCellGroup->at(j));
+        }
+
+        for(ULong_t j = 0; j < ff1n_Time->size(); ++j)
+        {
+            OneNeutron_Time->Fill(ff1n_Time->at(j));
+            OneNeutron_Cycle->Fill(ff1n_Cycle->at(j));
         }
     }
 

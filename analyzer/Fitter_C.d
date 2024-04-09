@@ -1,7 +1,7 @@
 
 # DO NOT DELETE
 
-./Fitter_C.so: Fitter82Ga.h
+./Fitter_C.so: Fitter84Ga.h
 ./Fitter_C.so: /opt/homebrew/Cellar/root/6.30.04/include/root/RtypesCore.h
 ./Fitter_C.so: /opt/homebrew/Cellar/root/6.30.04/include/root/ROOT/RConfig.hxx
 ./Fitter_C.so: /opt/homebrew/Cellar/root/6.30.04/include/root/RVersion.h
