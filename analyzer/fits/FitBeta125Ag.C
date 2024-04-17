@@ -47,17 +47,17 @@ Double_t Bateman_A1(Double_t *x, Double_t *par)
 {  
 	if(x[0] < t0)
     {
-      	return (938.881);
+      	return 0;
     }
     
   	if(x[0] >= t0 && x[0] < tc+t0)
     {	
-      	return (938.881)+(-exp(-x[0]*l1)*(exp(t0*l1)-exp(x[0]*l1))*620.768);
+      	return (-exp(-x[0]*l1)*(exp(t0*l1)-exp(x[0]*l1))*620.768);
     }
     
   	if(x[0] >= tc+t0 && x[0] <= ta)
     {
-     	return (938.881)+(-exp(-x[0]*l1)*(exp(t0*l1)-exp((t0+tc)*l1))*620.768);
+     	return (-exp(-x[0]*l1)*(exp(t0*l1)-exp((t0+tc)*l1))*620.768);
     }
     
   	if(x[0] > ta)
@@ -73,17 +73,17 @@ Double_t Bateman_A2(Double_t *x, Double_t *par)
 {		
 	if(x[0] < t0)
     {
-      	return (938.881);
+      	return 0;
     }
     
   	if(x[0] >= t0 && x[0] < tc+t0)
     {	
-      	return (938.881)+(-exp(-x[0]*l2)*(exp(t0*l2)-exp(x[0]*l2))*20550.8);
+      	return (-exp(-x[0]*l2)*(exp(t0*l2)-exp(x[0]*l2))*20550.8);
     }
     
   	if(x[0] >= tc+t0 && x[0] <= ta)
     {	
-     	return (938.881)+(-exp(-x[0]*l2)*(exp(t0*l2)-exp((t0+tc)*l2))*20550.8);
+     	return (-exp(-x[0]*l2)*(exp(t0*l2)-exp((t0+tc)*l2))*20550.8);
     }
     
   	if(x[0] > ta)
@@ -140,10 +140,6 @@ void FitBeta125Ag()
   	
 	cout << "IntegralBgd:" << IntBgd << endl;
 	
-  	cout << "IntegralA1-Bgd:" << (IntA1 - IntBgd) << endl;
-	cout << "IntegralA2-Bgd:" << (IntA2 - IntBgd) << endl;
-  	
-	cout << "Total integral with background:" << ((IntA1 - IntBgd) + (IntA2 - IntBgd) + IntBgd) << endl;
-	cout << "Total integral without background:" << ((IntA1 - IntBgd) + (IntA2 - IntBgd)) << endl;
-  	
+  	cout << "IntegralA1:" << IntA1 << endl;
+	cout << "IntegralA2:" << IntA2 << endl;  	
 }

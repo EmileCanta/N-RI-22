@@ -14,7 +14,6 @@ Double_t Bateman_tot(Double_t *x, Double_t *par)
 		+(-exp(-x[0]*l1)*(exp(t0*l1)-exp(x[0]*l1))*1223.22)
 		+((-exp(-x[0]*l1-x[0]*l2)*(-1+0.717522)*(exp(x[0]*l1+t0*l2)*l1-exp(x[0]*l1+x[0]*l2)*l1-exp(t0*l1+x[0]*l2)*l2+exp(x[0]*l1+x[0]*l2)*l2)*1223.22)/(-l1+l2))
 		+((exp(-x[0]*l1-x[0]*l3)*(0.717522)*(exp(x[0]*l1+t0*l3)*l1-exp(x[0]*l1+x[0]*l3)*l1-exp(t0*l1+x[0]*l3)*l3+exp(x[0]*l1+x[0]*l3)*l3)*1223.22)/(-l1+l3));
-		//+(1/((l1-l2)*(l1-l4)*(l2-l4)))*exp(-x[0]*(l1+l2+l4))*(-1+0.717522)*(-1+pn2)*(-exp(x[0]*(l1+l2)+t0*l4)*l1*(l1-l2)*l2+exp(x[0]*(l1+l2+l4))*(l1-l2)*(l1-l4)*(l2-l4)+exp(t0*l2+x[0]*(l1+l4))*l1*(l1-l4)*l4-exp(t0*l1+x[0]*(l2+l4))*l2*(l2-l4)*l4)*1223.22;
     }
     
   	if(x[0] >= tc+t0 && x[0] <= ta)
@@ -23,7 +22,6 @@ Double_t Bateman_tot(Double_t *x, Double_t *par)
 		+(-exp(-x[0]*l1)*(exp(t0*l1)-exp((t0+tc)*l1))*1223.22)
 		+((-exp(-x[0]*l1-x[0]*l2)*(-1+0.717522)*(-exp(x[0]*l1+t0*l2)*l1+exp(x[0]*l1+(t0+tc)*l2)*l1+exp(t0*l1+x[0]*l2)*l2-exp((t0+tc)*l1+x[0]*l2)*l2)*1223.22)/(l1-l2))
 		+((exp(-x[0]*l1-x[0]*l3)*(0.717522)*(-exp(x[0]*l1+t0*l3)*l1+exp(x[0]*l1+(t0+tc)*l3)*l1+exp(t0*l1+x[0]*l3)*l3-exp((t0+tc)*l1+x[0]*l3)*l3)*1223.22)/(l1-l3));
-		//+((exp(-x[0]*(l1+l2+l4))*(-1+0.717522)*(-1+pn2)*(-exp(x[0]*(l1+l2)+t0*l4)*l1*(l1-l2)*l2+exp(x[0]*(l1+l2)+(t0+tc)*l4)*l1*(l1-l2)*l2+exp(t0*l2+x[0]*(l1+l4))*l1*(l1-l4)*l4-exp((t0+tc)*l2+x[0]*(l1+l4))*l1*(l1-l4)*l4-exp(t0*l1+x[0]*(l2+l4))*l2*(l2-l4)*l4+exp((t0+tc)*l1+x[0]*(l2+l4))*l2*(l2-l4)*l4)*1223.22)/((l1-l2)*(l1-l4)*(l2-l4)));
     }
     
   	if(x[0] > ta)
@@ -51,17 +49,17 @@ Double_t Bateman_A1(Double_t *x, Double_t *par)
 {  
 	if(x[0] < t0)
     {
-      	return (129.287);
+      	return 0;
     }
     
   	if(x[0] >= t0 && x[0] < tc+t0)
     {	
-      	return (129.287)+(-exp(-x[0]*l1)*(exp(t0*l1)-exp(x[0]*l1))*1223.22);
+      	return (-exp(-x[0]*l1)*(exp(t0*l1)-exp(x[0]*l1))*1223.22);
     }
     
   	if(x[0] >= tc+t0 && x[0] <= ta)
     {
-     	return (129.287)+(-exp(-x[0]*l1)*(exp(t0*l1)-exp((t0+tc)*l1))*1223.22);
+     	return (-exp(-x[0]*l1)*(exp(t0*l1)-exp((t0+tc)*l1))*1223.22);
     }
     
   	if(x[0] > ta)
@@ -77,17 +75,17 @@ Double_t Bateman_A2(Double_t *x, Double_t *par)
 {		
 	if(x[0] < t0)
     {
-      	return (129.287);
+      	return 0;
     }
     
   	if(x[0] >= t0 && x[0] < tc+t0)
     {	
-      	return (129.287)+((-exp(-x[0]*l1-x[0]*l2)*(-1+0.717522)*(exp(x[0]*l1+t0*l2)*l1-exp(x[0]*l1+x[0]*l2)*l1-exp(t0*l1+x[0]*l2)*l2+exp(x[0]*l1+x[0]*l2)*l2)*1223.22)/(-l1+l2));
+      	return ((-exp(-x[0]*l1-x[0]*l2)*(-1+0.717522)*(exp(x[0]*l1+t0*l2)*l1-exp(x[0]*l1+x[0]*l2)*l1-exp(t0*l1+x[0]*l2)*l2+exp(x[0]*l1+x[0]*l2)*l2)*1223.22)/(-l1+l2));
     }
     
   	if(x[0] >= tc+t0 && x[0] <= ta)
     {	
-     	return (129.287)+((-exp(-x[0]*l1-x[0]*l2)*(-1+0.717522)*(-exp(x[0]*l1+t0*l2)*l1+exp(x[0]*l1+(t0+tc)*l2)*l1+exp(t0*l1+x[0]*l2)*l2-exp((t0+tc)*l1+x[0]*l2)*l2)*1223.22)/(l1-l2));
+     	return ((-exp(-x[0]*l1-x[0]*l2)*(-1+0.717522)*(-exp(x[0]*l1+t0*l2)*l1+exp(x[0]*l1+(t0+tc)*l2)*l1+exp(t0*l1+x[0]*l2)*l2-exp((t0+tc)*l1+x[0]*l2)*l2)*1223.22)/(l1-l2));
     }
     
   	if(x[0] > ta)
@@ -102,17 +100,17 @@ Double_t Bateman_A3(Double_t *x, Double_t *par)
 {		
 	if(x[0] < t0)
     {
-      	return (129.287);
+      	return 0;
     }
     
   	if(x[0] >= t0 && x[0] < tc+t0)
     {	
-      	return (129.287)+((exp(-x[0]*l1-x[0]*l3)*(0.717522)*(exp(x[0]*l1+t0*l3)*l1-exp(x[0]*l1+x[0]*l3)*l1-exp(t0*l1+x[0]*l3)*l3+exp(x[0]*l1+x[0]*l3)*l3)*1223.22)/(-l1+l3));
+      	return ((exp(-x[0]*l1-x[0]*l3)*(0.717522)*(exp(x[0]*l1+t0*l3)*l1-exp(x[0]*l1+x[0]*l3)*l1-exp(t0*l1+x[0]*l3)*l3+exp(x[0]*l1+x[0]*l3)*l3)*1223.22)/(-l1+l3));
     }
     
   	if(x[0] >= tc+t0 && x[0] <= ta)
     {	
-     	return (129.287)+((exp(-x[0]*l1-x[0]*l3)*(0.717522)*(-exp(x[0]*l1+t0*l3)*l1+exp(x[0]*l1+(t0+tc)*l3)*l1+exp(t0*l1+x[0]*l3)*l3-exp((t0+tc)*l1+x[0]*l3)*l3)*1223.22)/(l1-l3));
+     	return ((exp(-x[0]*l1-x[0]*l3)*(0.717522)*(-exp(x[0]*l1+t0*l3)*l1+exp(x[0]*l1+(t0+tc)*l3)*l1+exp(t0*l1+x[0]*l3)*l3-exp((t0+tc)*l1+x[0]*l3)*l3)*1223.22)/(l1-l3));
     }
     
   	if(x[0] > ta)
@@ -175,11 +173,8 @@ void FitBeta82Ga()
   	
 	cout << "IntegralBgd:" << IntBgd << endl;
 	
-  	cout << "IntegralA1-Bgd:" << (IntA1 - IntBgd) << endl;
-	cout << "IntegralA2-Bgd:" << (IntA2 - IntBgd) << endl;
-	cout << "IntegralA3-Bgd:" << (IntA3 - IntBgd) << endl;
-  	
-	cout << "Total integral with background:" << ((IntA1 - IntBgd) + (IntA2 - IntBgd) + (IntA3 - IntBgd) + IntBgd) << endl;
-	cout << "Total integral without background:" << ((IntA1 - IntBgd) + (IntA2 - IntBgd) + (IntA3 - IntBgd)) << endl;
+  	cout << "IntegralA1:" << IntA1 << endl;
+	cout << "IntegralA2:" << IntA2 << endl;
+	cout << "IntegralA3:" << IntA3 << endl;
   	
 }

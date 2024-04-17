@@ -26,7 +26,8 @@ class Sorter{
 
 	UInt_t lastevent;
 
-	UInt_t eventbefore;
+	UInt_t neutcount;
+
 	UInt_t eventafter;
 
 	TFile *output_file;
@@ -43,6 +44,7 @@ class Sorter{
 	UChar_t fTetra_Id;
 	Double_t fTetra_Time;
 
+
 	std::vector<Double_t> fGe_E_single;
 	std::vector<Double_t> fGe_Time_single;
 
@@ -51,6 +53,7 @@ class Sorter{
 	std::vector<Double_t> fTetra_Time_single;
 
 	std::vector<Double_t> fTetra_Rings;
+	std::vector<Double_t> fTetra_CellGroups;
 
 	std::vector<Double_t> fGeBeta_E_coinc;
 	std::vector<Double_t> fGeTetra_E_coinc;
@@ -66,12 +69,14 @@ class Sorter{
 
 	std::vector<Double_t> fBeta1n_Time_coinc;
 	std::vector<Double_t> fBeta1n_TimeDiff;
+	
 	std::vector<Double_t> fBeta1nBackward_Time_coinc;
 	std::vector<Double_t> fBeta1nBackward_TimeDiff;
 
 	std::vector<Double_t> fBeta2n_Time_coinc;
 	std::vector<Double_t> fBeta2n_TimeDiffFirst;
 	std::vector<Double_t> fBeta2n_TimeDiffSecond;
+
 	std::vector<Double_t> fBeta2nBackward_Time_coinc;
 	std::vector<Double_t> fBeta2nBackward_TimeDiffFirst;
 	std::vector<Double_t> fBeta2nBackward_TimeDiffSecond;
@@ -90,9 +95,6 @@ class Sorter{
 	std::vector<Double_t> f2n_TimeDiff;
 	std::vector<Double_t> f2n_Time_coinc;
 
-	std::vector<Double_t> f1n_Time;
-	std::vector<Double_t> f1n_Cycle;
-
 	std::vector<Double_t> fStoringFirstNeutronCellGroup;
 	std::vector<Double_t> fStoringSecondNeutronCellGroup;
 
@@ -107,6 +109,9 @@ class Sorter{
 	Double_t raw_time;
 	UChar_t raw_det_nbr;
 	UInt_t raw_coding;
+
+	int neut_id;
+	int lastneutron;
 
 	protected:
 
@@ -132,7 +137,6 @@ class Sorter{
 	virtual void FillBetaNeutronCoincBranches(Double_t);
 	virtual void FillBetaNeutronBackwardCoincBranches(Double_t);
 	virtual void FillNeutronNeutronCoincBranches(Double_t);
-	virtual void FillOneNeutronBranches(Double_t);
 	virtual Double_t Ge_alignement(UInt_t);
 	virtual void ResetVar();
 	virtual void ClearVectors();

@@ -5,21 +5,21 @@ Double_t Bateman_tot(Double_t *x, Double_t *par)
 	
 	if(x[0] < t0)
     {
-      	return (6.03726);
+      	return (167.019);
     }
     
   	if(x[0] >= t0 && x[0] < tc+t0)
     {	
-      	return (6.03726)
-		+(-exp(-x[0]*l1)*(exp(t0*l1)-exp(x[0]*l1))*3.08111);
-		//+((-exp(-x[0]*l1-x[0]*l2)*(-1+0.752942)*(exp(x[0]*l1+t0*l2)*l1-exp(x[0]*l1+x[0]*l2)*l1-exp(t0*l1+x[0]*l2)*l2+exp(x[0]*l1+x[0]*l2)*l2)*3.08111)/(-l1+l2));
+      	return (167.019)
+		+(-exp(-x[0]*l1)*(exp(t0*l1)-exp(x[0]*l1))*109.132)
+		+((-exp(-x[0]*l1-x[0]*l2)*(-1+0.75072)*(exp(x[0]*l1+t0*l2)*l1-exp(x[0]*l1+x[0]*l2)*l1-exp(t0*l1+x[0]*l2)*l2+exp(x[0]*l1+x[0]*l2)*l2)*109.132)/(-l1+l2));
     }
     
   	if(x[0] >= tc+t0 && x[0] <= ta)
     {
-     	return (6.03726)
-		+(-exp(-x[0]*l1)*(exp(t0*l1)-exp((t0+tc)*l1))*3.08111);
-		//+((-exp(-x[0]*l1-x[0]*l2)*(-1+0.752942)*(-exp(x[0]*l1+t0*l2)*l1+exp(x[0]*l1+(t0+tc)*l2)*l1+exp(t0*l1+x[0]*l2)*l2-exp((t0+tc)*l1+x[0]*l2)*l2)*3.08111)/(l1-l2));
+     	return (167.019)
+		+(-exp(-x[0]*l1)*(exp(t0*l1)-exp((t0+tc)*l1))*109.132)
+		+((-exp(-x[0]*l1-x[0]*l2)*(-1+0.75072)*(-exp(x[0]*l1+t0*l2)*l1+exp(x[0]*l1+(t0+tc)*l2)*l1+exp(t0*l1+x[0]*l2)*l2-exp((t0+tc)*l1+x[0]*l2)*l2)*109.132)/(l1-l2));
     }
     
   	if(x[0] > ta)
@@ -35,7 +35,7 @@ Double_t bgd(Double_t *x, Double_t *par)
 	
 	if(0 < x[0] && x[0] < ta)
     {
-      	return (6.03726);
+      	return (167.019);
     }
     
     return 0;
@@ -47,17 +47,17 @@ Double_t Bateman_A1(Double_t *x, Double_t *par)
 {  
 	if(x[0] < t0)
     {
-      	return (6.03726);
+      	return 167.019;
     }
     
   	if(x[0] >= t0 && x[0] < tc+t0)
     {	
-      	return (6.03726)+(-exp(-x[0]*l1)*(exp(t0*l1)-exp(x[0]*l1))*3.08111);
+      	return 167.019+(-exp(-x[0]*l1)*(exp(t0*l1)-exp(x[0]*l1))*109.132);
     }
     
   	if(x[0] >= tc+t0 && x[0] <= ta)
     {
-     	return (6.03726)+(-exp(-x[0]*l1)*(exp(t0*l1)-exp((t0+tc)*l1))*3.08111);
+     	return 167.019+(-exp(-x[0]*l1)*(exp(t0*l1)-exp((t0+tc)*l1))*109.132);
     }
     
   	if(x[0] > ta)
@@ -72,17 +72,17 @@ Double_t Bateman_A2(Double_t *x, Double_t *par)
 {  
 	if(x[0] < t0)
     {
-      	return (6.03726);
+      	return 167.019;
     }
     
   	if(x[0] >= t0 && x[0] < tc+t0)
     {	
-      	return (6.03726)+((-exp(-x[0]*l1-x[0]*l2)*(-1+0.752942)*(exp(x[0]*l1+t0*l2)*l1-exp(x[0]*l1+x[0]*l2)*l1-exp(t0*l1+x[0]*l2)*l2+exp(x[0]*l1+x[0]*l2)*l2)*3.08111)/(-l1+l2));
+      	return 167.019+((-exp(-x[0]*l1-x[0]*l2)*(-1+0.75072)*(exp(x[0]*l1+t0*l2)*l1-exp(x[0]*l1+x[0]*l2)*l1-exp(t0*l1+x[0]*l2)*l2+exp(x[0]*l1+x[0]*l2)*l2)*109.132)/(-l1+l2));
     }
     
   	if(x[0] >= tc+t0 && x[0] <= ta)
     {
-     	return (6.03726)+((-exp(-x[0]*l1-x[0]*l2)*(-1+0.752942)*(-exp(x[0]*l1+t0*l2)*l1+exp(x[0]*l1+(t0+tc)*l2)*l1+exp(t0*l1+x[0]*l2)*l2-exp((t0+tc)*l1+x[0]*l2)*l2)*3.08111)/(l1-l2));
+     	return 167.019+((-exp(-x[0]*l1-x[0]*l2)*(-1+0.75072)*(-exp(x[0]*l1+t0*l2)*l1+exp(x[0]*l1+(t0+tc)*l2)*l1+exp(t0*l1+x[0]*l2)*l2-exp((t0+tc)*l1+x[0]*l2)*l2)*109.132)/(l1-l2));
     }
     
   	if(x[0] > ta)
@@ -97,12 +97,12 @@ void FitTetra84Ga()
 {
 	TCanvas *c1 = new TCanvas();
 	
-	TFile *input = new TFile("/Users/cantacuzene/data/n-ri-22/runs/sorted_runs/84Ga/AllRuns.root");
+	TFile *input = new TFile("/Users/cantacuzene/data/n-ri-22/runs/sorted_runs/84Ga/All_All.root");
 	
 	gStyle->SetOptStat(0);
 	gStyle->SetOptFit(0001);
 	
-	TH1D *hist_neutron = (TH1D*)input->Get("TwoNeutrons_Time_coinc");
+	TH1D *hist_neutron = (TH1D*)input->Get("AlignedTetra_Time_single");
   	
   	TF1 *FitBatemanTot = new TF1("Bateman_tot", Bateman_tot, 0.0e3, 3.3e3);
   	TF1 *FitBgd = new TF1("bgd", bgd,  0.0e3, 3.3e3);
@@ -139,9 +139,6 @@ void FitTetra84Ga()
   	
   	cout << "IntegralBgd:" << IntBgd << endl;
 	
-  	cout << "IntegralA1-Bgd:" << (IntA1 - IntBgd) << endl;
-	cout << "IntegralA2-Bgd:" << (IntA2 - IntBgd) << endl;
-	cout << "Total integral with background:" << ((IntA1 - IntBgd) + (IntA2 - IntBgd) + IntBgd) << endl;
-	cout << "Total integral without background:" << ((IntA1 - IntBgd) + (IntA2 - IntBgd)) << endl;
-  	
+  	cout << "IntegralA1:" << IntA1 << endl;
+	cout << "IntegralA2:" << IntA2 << endl;
 }

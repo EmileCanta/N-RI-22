@@ -45,17 +45,17 @@ Double_t Bateman_A1(Double_t *x, Double_t *par)
 {  
 	if(x[0] < t0)
     {
-      	return (4.05266);
+      	return 0;
     }
     
   	if(x[0] >= t0 && x[0] < tc+t0)
     {	
-      	return (4.05266)+(-exp(-x[0]*l1)*(exp(t0*l1)-exp(x[0]*l1))*204.957);
+      	return (-exp(-x[0]*l1)*(exp(t0*l1)-exp(x[0]*l1))*204.957);
     }
     
   	if(x[0] >= tc+t0 && x[0] <= ta)
     {
-     	return (4.05266)+(-exp(-x[0]*l1)*(exp(t0*l1)-exp((t0+tc)*l1))*204.957);
+     	return (-exp(-x[0]*l1)*(exp(t0*l1)-exp((t0+tc)*l1))*204.957);
     }
     
   	if(x[0] > ta)
@@ -106,9 +106,6 @@ void FitTetra82Ga()
   	
   	cout << "IntegralBgd:" << IntBgd << endl;
 	
-  	cout << "IntegralA1-Bgd:" << (IntA1 - IntBgd) << endl;
-  	
-	cout << "Total integral with background:" << ((IntA1 - IntBgd) + IntBgd) << endl;
-	cout << "Total integral without background:" << ((IntA1 - IntBgd)) << endl;
+  	cout << "IntegralA1:" << IntA1 << endl;
   	
 }
