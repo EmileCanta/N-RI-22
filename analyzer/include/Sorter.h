@@ -148,7 +148,6 @@ class Sorter{
     //Bidim
     TH2D* ESvsBTD = new TH2D("ESvsBTD", "ESvsBTD", 5000, 0, 10, 7000, 0, 7000);
     TH2D* ESvsTTD = new TH2D("ESvsTTD", "ESvsTTD", 1000, 0, 200, 7000, 0, 7000);
-
     TH2D* CellGroups = new TH2D("CellGroups", "CellGroups", 28, 0, 14, 28, 0, 14);
 
 	protected:
@@ -179,6 +178,6 @@ class Sorter{
 	virtual void ResetVar();
 	virtual void ClearVectors();
 	virtual void SetVar(UChar_t);
-	virtual void Histogrammer(const char*);
+	//virtual void Histogrammer(const char*);
 	virtual UChar_t GetStatus(Double_t time);
 };

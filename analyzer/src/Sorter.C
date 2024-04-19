@@ -16,19 +16,14 @@ Sorter::Sorter(const char* InputFileName, const char* OutputFileName, Double_t c
 
     FillSingleBranches();
 
-    //FillNeutronGammaCoincBranches(200e6);
+    FillNeutronGammaCoincBranches(200e6);
 
-    //FillBetaGammaCoincBranches(10e6);
+    FillBetaGammaCoincBranches(10e6);
 
-    //FillBetaNeutronCoincBranches(200e6);
-    //FillBetaNeutronBackwardCoincBranches(200e6);
+    FillBetaNeutronCoincBranches(200e6);
+    FillBetaNeutronBackwardCoincBranches(200e6);
 
     FillNeutronNeutronCoincBranches(200e6);
-
-    //output_file->Close();
-
-    //Histogrammer(OutputFileName);
-    
 }
 
 //******************************************************************************
@@ -353,12 +348,12 @@ void Sorter::FillSingleBranches()
         }
 
         if(raw_time - last_time < 0) fCycle++;
-
-        //cout << static_cast<unsigned>(raw_det_nbr) << " " << fCycle << endl;
         
         last_time = raw_time;
         
         output_tree_single->Fill();
+
+        std::cout << std::setprecision(3) << std::setw(5) << (100.*fEntry/fEntries) << " %\r";
     }
 
     Ge_ESingle->Write();
@@ -419,6 +414,7 @@ void Sorter::FillNeutronGammaCoincBranches(Double_t coincwindow)
                         GeTetra_tDiff->Fill(TMath::Abs(raw_time - fTetra_Time) / 1.e6);
                         GeTetra_ECond->Fill(Ge_alignement(raw_energy));
                         GeTetra_tCond->Fill(raw_time / 1.e9);
+                        ESvsTTD->Fill(TMath::Abs(raw_time - fTetra_Time) / 1e6, Ge_alignement(raw_energy));
                     }
                  }
             }
@@ -427,11 +423,14 @@ void Sorter::FillNeutronGammaCoincBranches(Double_t coincwindow)
 	    lastevent = fEntry - eventafter;
 	    
 	    output_tree_coinc->Fill();
+
+        std::cout << std::setprecision(3) << std::setw(5) << (100.*fEntry/fEntries) << " %\r";
     }
 
     GeTetra_tDiff->Write();
     GeTetra_ECond->Write();
     GeTetra_tCond->Write();
+    ESvsTTD->Write();
 }
 
 //******************************************************************************
@@ -481,6 +480,8 @@ void Sorter::FillBetaGammaCoincBranches(Double_t coincwindow)
                         GeBeta_tDiff->Fill(TMath::Abs(raw_time - fBeta_Time) / 1.e6); //microsecondes
                         GeBeta_ECond->Fill(Ge_alignement(raw_energy));
                         GeBeta_tCond->Fill(raw_time / 1.e9); //milisecondes;
+
+                        ESvsBTD->Fill(TMath::Abs(raw_time - fBeta_Time) / 1.e6, Ge_alignement(raw_energy));
                     }
                  }
             }
@@ -489,11 +490,14 @@ void Sorter::FillBetaGammaCoincBranches(Double_t coincwindow)
 	    lastevent = fEntry + eventafter;
 	    
 	    output_tree_coinc->Fill();
+
+        std::cout << std::setprecision(3) << std::setw(5) << (100.*fEntry/fEntries) << " %\r";
     }
 
     GeBeta_tDiff->Write();
     GeBeta_ECond->Write();
     GeBeta_tCond->Write();
+    ESvsBTD->Write();
 }
 
 //******************************************************************************
@@ -579,6 +583,8 @@ void Sorter::FillBetaNeutronCoincBranches(Double_t coincwindow)
 	    lastevent = fEntry + eventafter;
 	    
 	    output_tree_coinc->Fill();
+
+        std::cout << std::setprecision(3) << std::setw(5) << (100.*fEntry/fEntries) << " %\r";
     }
 
     Beta1n_tCond->Write();
@@ -609,7 +615,7 @@ void Sorter::FillBetaNeutronBackwardCoincBranches(Double_t coincwindow)
         
         eventafter = 0;
 
-        int neutcount = 0;
+        neutcount = 0;
 
         if(fBeta_Id == 14)
         {   
@@ -659,11 +665,11 @@ void Sorter::FillBetaNeutronBackwardCoincBranches(Double_t coincwindow)
             if(neutcount == 2)
             {
                 fBeta2nBackward_tCond.push_back(fStoring2n_Time.front());
-                fBeta2n_tDiffFirst.push_back(fStoring1n_TimeDiff.front());
+                fBeta2nBackward_tDiffFirst.push_back(fStoring1n_TimeDiff.front());
                 fBeta2nBackward_tDiffSecond.push_back(fStoring2n_TimeDiff.front());
 
                 Beta2nBackward_tCond->Fill(fStoring2n_Time.front());
-                Beta2n_tDiffFirst->Fill(fStoring1n_TimeDiff.front());
+                Beta2nBackward_tDiffFirst->Fill(fStoring1n_TimeDiff.front());
                 Beta2nBackward_tDiffSecond->Fill(fStoring2n_TimeDiff.front());
             }
 	    }
@@ -671,6 +677,8 @@ void Sorter::FillBetaNeutronBackwardCoincBranches(Double_t coincwindow)
 	    lastevent = fEntry - eventafter;
 	    
 	    output_tree_coinc->Fill();
+
+        std::cout << std::setprecision(3) << std::setw(5) << (100.*fEntry/fEntries) << " %\r";
     }
 
     Beta1nBackward_tCond->Write();
@@ -707,9 +715,6 @@ void Sorter::FillNeutronNeutronCoincBranches(Double_t coincwindow)
 
         neut_id = 0;
 
-        //cout << "fEntry:" << fEntry << endl;
-        //cout << "lastneutron:" << lastneutron << endl;
-
         if(fTetra_Id >= 1 && fTetra_Id <= 12)
         {  
             if(fEntry < lastneutron - 1) continue;
@@ -720,8 +725,6 @@ void Sorter::FillNeutronNeutronCoincBranches(Double_t coincwindow)
             {
                 raw_data_tree->GetEntry(fEntry + eventafter++);
 
-                //cout << "eventafter:" << eventafter << endl;
-
                 if(fEntry + eventafter > fEntries) break;
                 if(fCoding != raw_coding) break;
                 if(fStatus != GetStatus(raw_time)) break;
@@ -729,8 +732,6 @@ void Sorter::FillNeutronNeutronCoincBranches(Double_t coincwindow)
                 if(TMath::Abs(raw_time - fTetra_Time) > coincwindow) continue;
                 if(TMath::Abs(raw_time - fTetra_Time) < coincwindow)
                 {
-                    //cout << "det_nbr:" << static_cast<unsigned>(raw_det_nbr) << endl;
-
                     if(raw_det_nbr >= 1 && raw_det_nbr <= 12)
                     {
                         if(TMath::Abs(raw_time - fTetra_Time != 0)) 
@@ -738,8 +739,6 @@ void Sorter::FillNeutronNeutronCoincBranches(Double_t coincwindow)
                             neutcount++;
 
                             neut_id = eventafter;
-
-                            //cout << "OUG" << endl;
 
                             if(neutcount == 1)
                             {
@@ -764,26 +763,30 @@ void Sorter::FillNeutronNeutronCoincBranches(Double_t coincwindow)
                 FirstNeutronCellGroup->Fill(fStoringFirstNeutronCellGroup.front());
                 SecondNeutronCellGroup->Fill(fStoringSecondNeutronCellGroup.front());
 
-                //cout << "AAAAAARG" << endl;
+                CellGroups->Fill(fStoringFirstNeutronCellGroup.front(), fStoringSecondNeutronCellGroup.front());
             }
-
-	        lastevent = fEntry + eventafter;
-            lastneutron = fEntry + neut_id;
-	    
-	        output_tree_coinc->Fill();
         }
+
+        lastevent = fEntry + eventafter;
+
+        lastneutron = fEntry + neut_id;
+
+        output_tree_coinc->Fill();
+
+        std::cout << std::setprecision(3) << std::setw(5) << (100.*fEntry/fEntries) << " %\r";
     }
 
     SecondNeut_tDiff->Write();
     SecondNeut_tCond->Write();
     FirstNeutronCellGroup->Write();
     SecondNeutronCellGroup->Write();
+    CellGroups->Write();
 }
 
 //******************************************************************************
 //******************************************************************************
 
-void Sorter::Histogrammer(const char* OutputFileName)
+/*void Sorter::Histogrammer(const char* OutputFileName)
 {
     std::cout << "Building histograms" << std::endl;
 
@@ -1038,7 +1041,7 @@ void Sorter::Histogrammer(const char* OutputFileName)
 
     //Normalization of cell groups
 
-    /*Tetra_CellGroups->SetBinContent(3,Tetra_CellGroups->GetBinContent(3)/(7.*28.6));
+    Tetra_CellGroups->SetBinContent(3,Tetra_CellGroups->GetBinContent(3)/(7.*28.6));
     Tetra_CellGroups->SetBinContent(5,Tetra_CellGroups->GetBinContent(5)/(4.*29.7));
     Tetra_CellGroups->SetBinContent(7,Tetra_CellGroups->GetBinContent(7)/(7.*34.3));
     Tetra_CellGroups->SetBinContent(9,Tetra_CellGroups->GetBinContent(9)/(7.3*34.1));
@@ -1065,7 +1068,7 @@ void Sorter::Histogrammer(const char* OutputFileName)
         CellGroups->SetBinContent(2*i-1,21,CellGroups->GetBinContent(2*i-1,21)/(7.*35.1));
         CellGroups->SetBinContent(2*i-1,23,CellGroups->GetBinContent(2*i-1,23)/(7.*35));
         CellGroups->SetBinContent(2*i-1,25,CellGroups->GetBinContent(2*i-1,25)/(7.*34.3));
-    }*/
+    }
 
     file->Write();
-}
+}*/
