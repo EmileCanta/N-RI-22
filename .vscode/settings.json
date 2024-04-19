@@ -56,7 +56,8 @@
         "FitTetra125Ag.C": "cpp",
         "FitBeta125Ag.C": "cpp",
         "FitTetra82Ga.C": "cpp",
-        "OnlineAnalysis.C": "cpp"
+        "OnlineAnalysis.C": "cpp",
+        "test.C": "cpp"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

@@ -1,0 +1,1 @@
+root -l -b -q "src/Sorter.C+(\"/Users/cantacuzene/data/n-ri-22/runs/raw_runs/TETRA23_RUN121.root\",\"/Users/cantacuzene/data/n-ri-22/runs/sorted_runs/82Ga/RUN121.root\",3000,6500,500)"
