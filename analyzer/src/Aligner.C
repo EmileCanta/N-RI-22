@@ -33,21 +33,16 @@ void Aligner(const char* inputFileName, Double_t maxTime, Double_t Offset)
 
     TBranch* branch_single = data_tree_single->Branch("AlignementSingle", &fAlignementSingle);
 
-    TH1D* AlignedBeta_Time_single = new TH1D("AlignedBeta_Time_single","AlignedBeta_Time_single",30000,0,30000);
-    TH1D* AlignedTetra_Time_single = new TH1D("AlignedTetra_Time_single","AlignedTetra_Time_single",30000,0,30000);
+    TH1D* Beta_tSingle = new TH1D("AlignedBeta_tSingle","Beta_tSingle",30000,0,30000);
+    TH1D* Tetra_tSingle = new TH1D("AlignedTetra_tSingle","Tetra_tSingle",30000,0,30000);
 
-    TH1D* UnalignedBeta_Time_single = new TH1D("UnalignedBeta_Time_single","UnalignedBeta_Time_single",30000,0,30000);
-    TH1D* UnalignedTetra_Time_single = new TH1D("UnalignedTetra_Time_single","UnalignedTetra_Time_single",30000,0,30000);
+    Beta_tSingle->Reset();
+    Tetra_tSingle->Reset();
 
-    AlignedBeta_Time_single->Reset();
-    AlignedTetra_Time_single->Reset();
-    UnalignedBeta_Time_single->Reset();
-    UnalignedTetra_Time_single->Reset();
-
-    data_tree_single->SetBranchAddress("Beta_Time_single", &fBeta_Time);
+    data_tree_single->SetBranchAddress("Beta_tSingle", &fBeta_Time);
     data_tree_single->SetBranchAddress("Beta_Cycle", &fBeta_Cycle);
 
-    data_tree_single->SetBranchAddress("Tetra_Time_single", &fTetra_Time);
+    data_tree_single->SetBranchAddress("Tetra_tSingle", &fTetra_Time);
     data_tree_single->SetBranchAddress("Tetra_Cycle", &fTetra_Cycle);
 
     Long64_t entries_single = data_tree_single->GetEntries();
@@ -118,13 +113,12 @@ void Aligner(const char* inputFileName, Double_t maxTime, Double_t Offset)
         {
             if(fAlignementSingle.at(j) == 1)
             {
-                AlignedBeta_Time_single->Fill(fBeta_Time->at(j));
+                Beta_tSingle->Fill(fBeta_Time->at(j));
             }
 
             else
             {
-                AlignedBeta_Time_single->Fill(fBeta_Time->at(j)-Offset);
-                UnalignedBeta_Time_single->Fill(fBeta_Time->at(j));
+                Beta_tSingle->Fill(fBeta_Time->at(j)-Offset);
             }
         }
 
@@ -132,13 +126,12 @@ void Aligner(const char* inputFileName, Double_t maxTime, Double_t Offset)
         {
             if(fAlignementSingle.at(j) == 1)
             {
-                AlignedTetra_Time_single->Fill(fTetra_Time->at(j));
+                Tetra_tSingle->Fill(fTetra_Time->at(j));
             }
 
             else
             {
-                AlignedTetra_Time_single->Fill(fTetra_Time->at(j)-Offset);
-                UnalignedTetra_Time_single->Fill(fTetra_Time->at(j));
+                Tetra_tSingle->Fill(fTetra_Time->at(j)-Offset);
             }
         }
     }

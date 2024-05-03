@@ -24,6 +24,10 @@ Sorter::Sorter(const char* InputFileName, const char* OutputFileName, Double_t c
     FillBetaNeutronBackwardCoincBranches(200e6);
 
     FillNeutronNeutronCoincBranches(200e6);
+
+    output_tree_coinc->Write();
+
+    data_file->Close();
 }
 
 //******************************************************************************
@@ -123,6 +127,7 @@ void Sorter::ClearVectors()
     fBeta1nBackward_tDiff.clear();
     fBeta2nBackward_tDiffFirst.clear();
     fBeta2nBackward_tDiffSecond.clear();
+    fBeta2n_tDiffSecondMinusFirst.clear();
 
     //Tetra-Tetra
     fFirstNeutronCellGroup.clear();
@@ -350,7 +355,7 @@ void Sorter::FillSingleBranches()
         if(raw_time - last_time < 0) fCycle++;
         
         last_time = raw_time;
-        
+
         output_tree_single->Fill();
 
         std::cout << std::setprecision(3) << std::setw(5) << (100.*fEntry/fEntries) << " %\r";
@@ -365,6 +370,9 @@ void Sorter::FillSingleBranches()
     Tetra_Cycle->Write();
     Tetra_Rings->Write();
     Tetra_CellGroups->Write();
+
+    output_tree_single->Write();
+
 }
 
 //******************************************************************************
@@ -515,13 +523,15 @@ void Sorter::FillBetaNeutronCoincBranches(Double_t coincwindow)
 	{
         raw_data_tree->GetEntry(fEntry);
 
+        //cout << "start:" << fEntry << " " << static_cast<unsigned>(raw_det_nbr) << endl;
+
         ClearVectors();
         
         SetVar(raw_det_nbr);
         
         eventafter = 0;
 
-        int neutcount = 0;
+        neutcount = 0;
 
         if(fBeta_Id == 14)
         {   
@@ -533,6 +543,8 @@ void Sorter::FillBetaNeutronCoincBranches(Double_t coincwindow)
 
                 raw_data_tree->GetEntry(fEntry + eventafter++);
 
+                //cout << "eventafter " << eventafter << endl;
+
                 if(fEntry + eventafter > fEntries) break;
                 if(fCoding != raw_coding) break;
                 if(fStatus != GetStatus(raw_time)) break;
@@ -540,20 +552,29 @@ void Sorter::FillBetaNeutronCoincBranches(Double_t coincwindow)
                 if(TMath::Abs(raw_time - fBeta_Time) > coincwindow) continue;
                 if(TMath::Abs(raw_time - fBeta_Time) < coincwindow)
                 {   
+
+                    //cout << static_cast<unsigned>(raw_det_nbr) << endl;
+
                     if(raw_det_nbr >= 1 && raw_det_nbr <= 12)
                     {
+                        //cout << "WOUHOU" << endl;
+
                         neutcount++;
 
                         if(neutcount == 1)
-                        {
-                            fStoring1n_Time.push_back(fBeta_Time / 1e9);
-                            fStoring1n_TimeDiff.push_back(TMath::Abs(raw_time - fBeta_Time) / 1e6);
+                        {   
+                            //cout << "ERG" << endl;
+
+                            fStoring1n_Time.push_back(fBeta_Time / 1.e9);
+                            fStoring1n_TimeDiff.push_back(TMath::Abs(raw_time - fBeta_Time) / 1.e6);
                         }
 
                         if(neutcount == 2)
                         {
-                            fStoring2n_Time.push_back(fBeta_Time / 1e9);
-                            fStoring2n_TimeDiff.push_back(TMath::Abs(raw_time - fBeta_Time) / 1e6);
+                            //cout << "OUUUUILLE" << endl;
+
+                            fStoring2n_Time.push_back(fBeta_Time / 1.e9);
+                            fStoring2n_TimeDiff.push_back(TMath::Abs(raw_time - fBeta_Time) / 1.e6);
                         }
                     }
                  }
@@ -561,26 +582,34 @@ void Sorter::FillBetaNeutronCoincBranches(Double_t coincwindow)
 
             if(neutcount == 1)
             {
-                fBeta1n_tCond.push_back(fStoring1n_Time.front());
-                fBeta1n_tDiff.push_back(fStoring1n_TimeDiff.front());
+                //cout << "LOULILOU" << endl;
 
-                Beta1n_tCond->Fill(fStoring1n_Time.front());
-                Beta1n_tDiff->Fill(fStoring1n_TimeDiff.front());
+                fBeta1n_tCond.push_back(fStoring1n_Time.back());
+                fBeta1n_tDiff.push_back(fStoring1n_TimeDiff.back());
+
+                Beta1n_tCond->Fill(fStoring1n_Time.back());
+                Beta1n_tDiff->Fill(fStoring1n_TimeDiff.back());
             }
 
             if(neutcount == 2)
-            {
-                fBeta2n_tCond.push_back(fStoring2n_Time.front());
-                fBeta2n_tDiffFirst.push_back(fStoring1n_TimeDiff.front());
-                fBeta2n_tDiffSecond.push_back(fStoring2n_TimeDiff.front());
+            {   
+                //cout << "EN MODE GNOKMAM" << endl;    
 
-                Beta2n_tCond->Fill(fStoring2n_Time.front());
-                Beta2n_tDiffFirst->Fill(fStoring1n_TimeDiff.front());
-                Beta2n_tDiffSecond->Fill(fStoring2n_TimeDiff.front());
+                fBeta2n_tCond.push_back(fStoring2n_Time.back());
+                fBeta2n_tDiffFirst.push_back(fStoring1n_TimeDiff.back());
+                fBeta2n_tDiffSecond.push_back(fStoring2n_TimeDiff.back());
+                fBeta2n_tDiffSecondMinusFirst.push_back(fStoring2n_TimeDiff.back() - fStoring1n_TimeDiff.back());
+
+                Beta2n_tCond->Fill(fStoring2n_Time.back());
+                Beta2n_tDiffFirst->Fill(fStoring1n_TimeDiff.back());
+                Beta2n_tDiffSecond->Fill(fStoring2n_TimeDiff.back());
+                Beta2n_tDiffSecondMinusFirst->Fill(fStoring2n_TimeDiff.back() - fStoring1n_TimeDiff.back());
             }
 	    }
 
 	    lastevent = fEntry + eventafter;
+
+        //cout << "lastevent:" << lastevent << endl;
 	    
 	    output_tree_coinc->Fill();
 
@@ -592,6 +621,7 @@ void Sorter::FillBetaNeutronCoincBranches(Double_t coincwindow)
     Beta2n_tCond->Write();
     Beta2n_tDiffFirst->Write();
     Beta2n_tDiffSecond->Write();
+    Beta2n_tDiffSecondMinusFirst->Write();
 }
 
 //******************************************************************************
@@ -640,13 +670,13 @@ void Sorter::FillBetaNeutronBackwardCoincBranches(Double_t coincwindow)
 
                         if(neutcount == 1)
                         {
-                            fStoring1n_Time.push_back(fBeta_Time / 1e9);
+                            fStoring1n_Time.push_back(fBeta_Time / 1.e9);
                             fStoring1n_TimeDiff.push_back((raw_time - fBeta_Time) / 1e6);
                         }
 
                         if(neutcount == 2)
                         {
-                            fStoring2n_Time.push_back(fBeta_Time / 1e9);
+                            fStoring2n_Time.push_back(fBeta_Time / 1.e9);
                             fStoring2n_TimeDiff.push_back((raw_time - fBeta_Time) / 1e6);
                         }
                     }
@@ -655,22 +685,22 @@ void Sorter::FillBetaNeutronBackwardCoincBranches(Double_t coincwindow)
 
             if(neutcount == 1)
             {
-                fBeta1nBackward_tCond.push_back(fStoring1n_Time.front());
-                fBeta1nBackward_tDiff.push_back(fStoring1n_TimeDiff.front());
+                fBeta1nBackward_tCond.push_back(fStoring1n_Time.back());
+                fBeta1nBackward_tDiff.push_back(fStoring1n_TimeDiff.back());
 
-                Beta1nBackward_tCond->Fill(fStoring1n_Time.front());
-                Beta1nBackward_tDiff->Fill(fStoring1n_TimeDiff.front());
+                Beta1nBackward_tCond->Fill(fStoring1n_Time.back());
+                Beta1nBackward_tDiff->Fill(fStoring1n_TimeDiff.back());
             }
 
             if(neutcount == 2)
             {
-                fBeta2nBackward_tCond.push_back(fStoring2n_Time.front());
-                fBeta2nBackward_tDiffFirst.push_back(fStoring1n_TimeDiff.front());
-                fBeta2nBackward_tDiffSecond.push_back(fStoring2n_TimeDiff.front());
+                fBeta2nBackward_tCond.push_back(fStoring2n_Time.back());
+                fBeta2nBackward_tDiffFirst.push_back(fStoring1n_TimeDiff.back());
+                fBeta2nBackward_tDiffSecond.push_back(fStoring2n_TimeDiff.back());
 
-                Beta2nBackward_tCond->Fill(fStoring2n_Time.front());
-                Beta2nBackward_tDiffFirst->Fill(fStoring1n_TimeDiff.front());
-                Beta2nBackward_tDiffSecond->Fill(fStoring2n_TimeDiff.front());
+                Beta2nBackward_tCond->Fill(fStoring2n_Time.back());
+                Beta2nBackward_tDiffFirst->Fill(fStoring1n_TimeDiff.back());
+                Beta2nBackward_tDiffSecond->Fill(fStoring2n_TimeDiff.back());
             }
 	    }
 
@@ -742,8 +772,8 @@ void Sorter::FillNeutronNeutronCoincBranches(Double_t coincwindow)
 
                             if(neutcount == 1)
                             {
-                                fStoring2n_Time.push_back(raw_time / 1e9);
-                                fStoring2n_TimeDiff.push_back(TMath::Abs(raw_time - fTetra_Time) / 1e6);
+                                fStoring2n_Time.push_back(raw_time / 1.e9);
+                                fStoring2n_TimeDiff.push_back(TMath::Abs(raw_time - fTetra_Time) / 1.e6);
                                 fStoringSecondNeutronCellGroup.push_back(raw_det_nbr);
                             }
                         }
@@ -766,8 +796,6 @@ void Sorter::FillNeutronNeutronCoincBranches(Double_t coincwindow)
                 CellGroups->Fill(fStoringFirstNeutronCellGroup.front(), fStoringSecondNeutronCellGroup.front());
             }
         }
-
-        lastevent = fEntry + eventafter;
 
         lastneutron = fEntry + neut_id;
 

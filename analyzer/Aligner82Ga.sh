@@ -1,1 +1,1 @@
-root -l -b -q "src/Aligner.C+(\"/Users/cantacuzene/data/n-ri-22/runs/sorted_runs/RUN121.root\",6510,1540)"
+root -l -b -q "src/Aligner.C+(\"/Users/cantacuzene/data/n-ri-22/runs/sorted_runs/82Ga/RUN121.root\",6510,1540)"

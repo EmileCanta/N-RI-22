@@ -92,6 +92,7 @@ class Sorter{
 	std::vector<Double_t> fBeta1nBackward_tDiff;
 	std::vector<Double_t> fBeta2nBackward_tDiffFirst;
 	std::vector<Double_t> fBeta2nBackward_tDiffSecond;
+	std::vector<Double_t> fBeta2n_tDiffSecondMinusFirst;
 
 	//Tetra-Tetra
 	std::vector<Double_t> fFirstNeutronCellGroup;
@@ -139,6 +140,7 @@ class Sorter{
     TH1D* Beta1nBackward_tDiff = new TH1D("Beta1nBackward_tDiff", "Beta1nBackward_tDiff", 20000, -2000, 2000);
     TH1D* Beta2nBackward_tDiffFirst = new TH1D("Beta2nBackward_tDiffFirst", "Beta2nBackward_tDiffFirst", 20000, -2000, 2000);
     TH1D* Beta2nBackward_tDiffSecond = new TH1D("Beta2nBackward_tDiffSecond", "Beta2nBackward_tDiffSecond", 20000, -2000, 2000);
+	TH1D* Beta2n_tDiffSecondMinusFirst = new TH1D("Beta2n_tDiffSecondMinusFirst", "Beta2n_tDiffSecondMinusFirst", 20000, -2000, 2000);
 
     TH1D* SecondNeut_tDiff = new TH1D("SecondNeut_tDiff", "SecondNeut_tDiff", 10000, 0, 2000);
     TH1D* SecondNeut_tCond = new TH1D("SecondNeut_tCond", "SecondNeut_tCond", 30000, 0, 30000);

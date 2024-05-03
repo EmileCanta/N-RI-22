@@ -2,6 +2,7 @@ root -l -b -q "src/Aligner.C+(\"/Users/cantacuzene/data/n-ri-22/runs/sorted_runs
 root -l -b -q "src/Aligner.C+(\"/Users/cantacuzene/data/n-ri-22/runs/sorted_runs/84Ga/RUN93.root\",3310,1530)"&
 root -l -b -q "src/Aligner.C+(\"/Users/cantacuzene/data/n-ri-22/runs/sorted_runs/84Ga/RUN94.root\",3310,1530)"&
 root -l -b -q "src/Aligner.C+(\"/Users/cantacuzene/data/n-ri-22/runs/sorted_runs/84Ga/RUN96.root\",3310,1530)"&
+root -l -b -q "src/Aligner.C+(\"/Users/cantacuzene/data/n-ri-22/runs/sorted_runs/84Ga/RUN97.root\",3310,1530)"&
 root -l -b -q "src/Aligner.C+(\"/Users/cantacuzene/data/n-ri-22/runs/sorted_runs/84Ga/RUN98.root\",3310,1530)"&
 root -l -b -q "src/Aligner.C+(\"/Users/cantacuzene/data/n-ri-22/runs/sorted_runs/84Ga/RUN99.root\",3310,1530)"&
 wait
