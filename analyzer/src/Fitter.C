@@ -8,7 +8,7 @@ void Fitter(const char* inputFile, Double_t min, Double_t max)
 	TFile* rootFile = TFile::Open(inputFile, "READ");
 	
 	TH1D *hist_beta = (TH1D*)rootFile->Get("AlignedBeta_tSingle");
-	TH1D *hist_tetra = (TH1D*)rootFile->Get("Beta2n_tCond");
+	TH1D *hist_tetra = (TH1D*)rootFile->Get("AlignedTetra_tSingle");
 
 	TF1 *FitBat_beta = new TF1("Bat_beta", Bat_beta, min, max, 3);
 	TF1 *FitBat_tetra = new TF1("Bat_tetra", Bat_tetra, min, max, 3);

@@ -58,7 +58,12 @@
         "FitTetra82Ga.C": "cpp",
         "OnlineAnalysis.C": "cpp",
         "test.C": "cpp",
-        "plot.C": "cpp"
+        "plot.C": "cpp",
+        "82GaRandomRate.C": "cpp",
+        "Ga82RandomRate.C": "cpp",
+        "82Ga_2n_ActivityCurve.C": "cpp",
+        "Ga82_2n_ActivityCurve.C": "cpp",
+        "Ga84RandomRate.C": "cpp"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }
