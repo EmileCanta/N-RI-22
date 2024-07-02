@@ -63,7 +63,14 @@
         "Ga82RandomRate.C": "cpp",
         "82Ga_2n_ActivityCurve.C": "cpp",
         "Ga82_2n_ActivityCurve.C": "cpp",
-        "Ga84RandomRate.C": "cpp"
+        "Ga84RandomRate.C": "cpp",
+        "TripleCoinc.C": "cpp",
+        "Aligner copy.C": "cpp",
+        "Aligner2n.C": "cpp",
+        "rings_bgdsubstract.C": "cpp",
+        "hist_substract.C": "cpp",
+        "CalibPerRun.C": "cpp",
+        "multi_plot.C": "cpp"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

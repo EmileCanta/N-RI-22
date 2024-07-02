@@ -39,19 +39,21 @@ void Ga82RandomRate()
 	gStyle->SetOptStat(0);
 	gStyle->SetOptFit(0001);
 	
-	TH1D *hist_neutron = (TH1D*)input->Get("SecondNeut_tCond");
-  	
+	TH1D *hist_2n = (TH1D*)input->Get("SecondNeut_tCond");
+  	//TH1D *hist_single = (TH1D*)input->Get("AlignedTetra_tSingle");
+
   	TF1 *f1 = new TF1("the_function", the_function, 0.0e3, 6.5e3);
   	
-  	hist_neutron->Draw();
+	//hist_single->Draw();
+  	hist_2n->Draw("sameshist");
 
-	f1->SetLineColor(kOrange);
-  	f1->Draw("SAME");
+  	f1->Draw("same");
   	
   	TLegend *legend = new TLegend(0.65,0.65,0.80,0.85);
 	legend->SetTextFont(72);
     legend->SetTextSize(0.02);
-    legend->AddEntry(hist_neutron,"Data","lpe");
-    legend->AddEntry(f1,"Random rate","l");
+	//legend->AddEntry(hist_single,"Single data","lpe");
+    legend->AddEntry(hist_2n,"2n data","lpe");
+    legend->AddEntry(f1,"Calculated random rate","l");
     legend->Draw();  	
 }

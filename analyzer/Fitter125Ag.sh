@@ -1,1 +1,1 @@
-root -l "src/Fitter.C+(\"/Users/cantacuzene/data/n-ri-22/runs/sorted_runs/125Ag/AllRuns.root\",0.1e3,4.4e3)"
+root -l "src/Fitter.C+(\"/Users/cantacuzene/data/n-ri-22/runs/sorted_runs/125Ag/All.root\",0.1e3,4.4e3)"

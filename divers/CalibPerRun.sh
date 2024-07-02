@@ -1,0 +1,10 @@
+root -l -b -q "CalibPerRun.C+(\"/Users/cantacuzene/data/n-ri-22/runs/sorted_runs/84Ga/a.root\",\"/Users/cantacuzene/data/n-ri-22/runs/sorted_runs/84Ga/acalib.root\",1.0004,-0.5413)"&
+root -l -b -q "CalibPerRun.C+(\"/Users/cantacuzene/data/n-ri-22/runs/sorted_runs/84Ga/b.root\",\"/Users/cantacuzene/data/n-ri-22/runs/sorted_runs/84Ga/bcalib.root\",0.9993,0.6729)"&
+root -l -b -q "CalibPerRun.C+(\"/Users/cantacuzene/data/n-ri-22/runs/sorted_runs/84Ga/c.root\",\"/Users/cantacuzene/data/n-ri-22/runs/sorted_runs/84Ga/ccalib.root\",1.0001,0.2135)"&
+root -l -b -q "CalibPerRun.C+(\"/Users/cantacuzene/data/n-ri-22/runs/sorted_runs/84Ga/d.root\",\"/Users/cantacuzene/data/n-ri-22/runs/sorted_runs/84Ga/dcalib.root\",0.9993,0.2115)"&
+root -l -b -q "CalibPerRun.C+(\"/Users/cantacuzene/data/n-ri-22/runs/sorted_runs/84Ga/e.root\",\"/Users/cantacuzene/data/n-ri-22/runs/sorted_runs/84Ga/ecalib.root\",0.9995,0.5614)"&
+root -l -b -q "CalibPerRun.C+(\"/Users/cantacuzene/data/n-ri-22/runs/sorted_runs/84Ga/f.root\",\"/Users/cantacuzene/data/n-ri-22/runs/sorted_runs/84Ga/fcalib.root\",0.9907,0.5387)"&
+root -l -b -q "CalibPerRun.C+(\"/Users/cantacuzene/data/n-ri-22/runs/sorted_runs/84Ga/g.root\",\"/Users/cantacuzene/data/n-ri-22/runs/sorted_runs/84Ga/gcalib.root\",0.9986,0.9607)"&
+root -l -b -q "CalibPerRun.C+(\"/Users/cantacuzene/data/n-ri-22/runs/sorted_runs/84Ga/h.root\",\"/Users/cantacuzene/data/n-ri-22/runs/sorted_runs/84Ga/hcalib.root\",1.0004,0.1925)"&
+root -l -b -q "CalibPerRun.C+(\"/Users/cantacuzene/data/n-ri-22/runs/sorted_runs/84Ga/i.root\",\"/Users/cantacuzene/data/n-ri-22/runs/sorted_runs/84Ga/icalib.root\",1.0003,0.1617)"&
+root -l -b -q "CalibPerRun.C+(\"/Users/cantacuzene/data/n-ri-22/runs/sorted_runs/84Ga/j.root\",\"/Users/cantacuzene/data/n-ri-22/runs/sorted_runs/84Ga/jcalib.root\",0.9981,0.5772)"&

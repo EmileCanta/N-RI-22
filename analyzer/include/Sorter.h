@@ -36,6 +36,7 @@ class Sorter{
 	UInt_t lastevent;
 	UInt_t neutcount;
 	UInt_t eventafter;
+	UInt_t eventbefore;
 
 	int neut_id;
 	int lastneutron;
@@ -75,11 +76,13 @@ class Sorter{
 	std::vector<Double_t> fGeBeta_ECond;
 	std::vector<Double_t> fGeBeta_tCond;
 	std::vector<Double_t> fGeBeta_tDiff;
+	std::vector<Long64_t> fGeBeta_Index;
 
 	//Ge-Tetra
 	std::vector<Double_t> fGeTetra_ECond;
 	std::vector<Double_t> fGeTetra_tCond;
 	std::vector<Double_t> fGeTetra_tDiff;
+	std::vector<Long64_t> fGeTetra_Index;
 
 	//Beta-Tetra
 	std::vector<Double_t> fBeta1n_tCond;
@@ -99,6 +102,8 @@ class Sorter{
 	std::vector<Double_t> fSecondNeutronCellGroup;
 	std::vector<Double_t> fStoringFirstNeutronCellGroup;
 	std::vector<Double_t> fStoringSecondNeutronCellGroup;
+	std::vector<UInt_t> fSecondNeutronCycle;
+	std::vector<Long64_t> fTwoNeutronsGamma_Index;
 
 	//Storing vectors
 	std::vector<Double_t> fStoring1n_Time;
@@ -107,12 +112,16 @@ class Sorter{
 	std::vector<Double_t> fStoring2n_TimeDiff;
 	std::vector<Double_t> fSecondNeut_tDiff;
 	std::vector<Double_t> fSecondNeut_tCond;
+	std::vector<Double_t> fTwoNeutronsGamma_ECond;
+	std::vector<Double_t> fTwoNeutronsGamma_tDiff;
+	std::vector<Double_t> fTwoNeutronsGamma_tCond;
+	std::vector<UInt_t> fStoring2n_Cycle;
 
     TH1D* Ge_tSingle = new TH1D("Ge_tSingle", "Ge_tSingle", 30000,0,30000);
     TH1D* Beta_tSingle = new TH1D("Beta_tSingle", "Beta_tSingle", 30000,0,30000);
     TH1D* Tetra_tSingle = new TH1D("Tetra_tSingle", "Tetra_tSingle", 30000,0,30000);
 
-	TH1D* Ge_ESingle = new TH1D("Ge_ESingle", "Ge_ESingle", 7000,0,7000);
+	TH1D* Ge_ESingle = new TH1D("Ge_ESingle", "Ge_ESingle", 10000,0,10000);
 
     TH1I* Tetra_Cycle = new TH1I("Tetra_Cycle", "Tetra_Cycle", 1000,0,1000);
     TH1I* Beta_Cycle = new TH1I("Beta_Cycle", "Beta_Cycle", 1000,0,1000);
@@ -121,7 +130,7 @@ class Sorter{
 	TH1I* Tetra_Rings = new TH1I("Tetra_Rings", "Tetra_Rings", 28, 0, 14);
     TH1I* Tetra_CellGroups = new TH1I("Tetra_CellGroups", "Tetra_CellGroups", 28, 0, 14);
 
-	TH1D* GeBeta_ECond = new TH1D("GeBeta_ECond", "GeBeta_ECond", 7000, 0, 7000);
+	TH1D* GeBeta_ECond = new TH1D("GeBeta_ECond", "GeBeta_ECond", 10000, 0, 10000);
 	TH1D* GeBeta_tCond = new TH1D("GeBeta_tCond","GeBeta_tCond", 30000, 0, 30000);
     TH1D* GeBeta_tDiff = new TH1D("GeBeta_tDiff","GeBeta_tDiff", 5000, 0, 10);
 
@@ -146,6 +155,9 @@ class Sorter{
     TH1D* SecondNeut_tCond = new TH1D("SecondNeut_tCond", "SecondNeut_tCond", 30000, 0, 30000);
     TH1D* FirstNeutronCellGroup = new TH1D("FirstNeutronCellGroup", "FirstNeutronCellGroup", 28, 0, 14);
     TH1D* SecondNeutronCellGroup = new TH1D("SecondNeutronCellGroup", "SecondNeutronCellGroup", 28, 0, 14);
+	TH1D* TwoNeutronsGamma_ECond = new TH1D("TwoNeutronsGamma_ECond", "TwoNeutronsGamma_ECond", 7000, 0, 7000);
+	TH1D* TwoNeutronsGamma_tDiff = new TH1D("TwoNeutronsGamma_tDiff", "TwoNeutronsGamma_tDiff", 1000, 0, 200);
+	TH1D* TwoNeutronsGamma_tCond = new TH1D("TwoNeutronsGamma_tCond", "TwoNeutronsGamma_tCond", 30000, 0, 30000);
 
     //Bidim
     TH2D* ESvsBTD = new TH2D("ESvsBTD", "ESvsBTD", 5000, 0, 10, 7000, 0, 7000);
@@ -175,7 +187,7 @@ class Sorter{
 	virtual void FillBetaGammaCoincBranches(Double_t);
 	virtual void FillBetaNeutronCoincBranches(Double_t);
 	virtual void FillBetaNeutronBackwardCoincBranches(Double_t);
-	virtual void FillNeutronNeutronCoincBranches(Double_t);
+	virtual void FillNeutronNeutronCoincBranches(Double_t, Double_t);
 	virtual Double_t Ge_alignement(UInt_t);
 	virtual void ResetVar();
 	virtual void ClearVectors();

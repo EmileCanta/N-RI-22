@@ -1,4 +1,4 @@
-#include "../include/Fitter84Ga.h"
+#include "../include/Fitter125Ag.h"
 
 void Fitter(const char* inputFile, Double_t min, Double_t max)
 {
