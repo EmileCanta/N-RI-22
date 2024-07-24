@@ -42,6 +42,7 @@ void TripleCoinc(const char* inputFileName)
     std::vector<Double_t> *fGeTetra_t_coinc = 0;
     std::vector<Double_t> *fGeTetra_Index = 0;
     std::vector<Double_t> *fGeBeta_Index = 0;
+    std::vector<Double_t> *fGeBeta_tDiff = 0;
 
     std::vector<Double_t> fTripleCoinc_ECond;
     std::vector<Double_t> fTripleCoinc_tCond;
@@ -59,6 +60,7 @@ void TripleCoinc(const char* inputFileName)
     data_tree->SetBranchAddress("GeTetra_tCond", &fGeTetra_t_coinc);
     data_tree->SetBranchAddress("GeTetra_Index", &fGeTetra_Index);
     data_tree->SetBranchAddress("GeBeta_Index", &fGeBeta_Index);
+    data_tree->SetBranchAddress("GeBeta_tDiff", &fGeBeta_tDiff);
 
     TH1D *GammaBetaNeutronECoinc = new TH1D("GammaBetaNeutronECoinc", "GammaBetaNeutronECoinc", 7000, 0, 7000);
     TH1D *GammaBetaNeutrontCoinc = new TH1D("GammaBetaNeutrontCoinc", "GammaBetaNeutrontCoinc", 10000, 0, 10000);
@@ -83,15 +85,18 @@ void TripleCoinc(const char* inputFileName)
         Double_t sizeBeta = fGeBeta_Index->size();
 
         for(Double_t j = 0; j < sizeTetra; ++j)
-        {
+        {   
             listTetra[0].push_back(fGeTetra_Index->at(j));
             listTetra[1].push_back(fGeTetra_E_coinc->at(j));
             listTetra[2].push_back(fGeTetra_t_coinc->at(j));
         }
 
         for(Double_t k = 0; k < sizeBeta; ++k)
-        {
-            listBeta.push_back(fGeBeta_Index->at(k));
+        {   
+            if(fGeBeta_tDiff->at(k) >= 1.14 && fGeBeta_tDiff->at(k) <= 1.59)
+            {
+                listBeta.push_back(fGeBeta_Index->at(k));
+            }
         }
     }
 

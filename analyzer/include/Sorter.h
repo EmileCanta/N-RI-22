@@ -100,21 +100,22 @@ class Sorter{
 	//Tetra-Tetra
 	std::vector<Double_t> fFirstNeutronCellGroup;
 	std::vector<Double_t> fSecondNeutronCellGroup;
-	std::vector<Double_t> fStoringFirstNeutronCellGroup;
-	std::vector<Double_t> fStoringSecondNeutronCellGroup;
 	std::vector<UInt_t> fSecondNeutronCycle;
+	std::vector<Double_t> fSecondNeut_tDiff;
+	std::vector<Double_t> fSecondNeut_tCond;
+	std::vector<Double_t> fTwoNeutronsGamma_ECond;
+	std::vector<Double_t> fTwoNeutronsGamma_tDiff;
+	std::vector<Double_t> fTwoNeutronsGamma_tCond;
 	std::vector<Long64_t> fTwoNeutronsGamma_Index;
+	std::vector<UInt_t> fNeutCount;
 
 	//Storing vectors
 	std::vector<Double_t> fStoring1n_Time;
 	std::vector<Double_t> fStoring1n_TimeDiff;
 	std::vector<Double_t> fStoring2n_Time;
 	std::vector<Double_t> fStoring2n_TimeDiff;
-	std::vector<Double_t> fSecondNeut_tDiff;
-	std::vector<Double_t> fSecondNeut_tCond;
-	std::vector<Double_t> fTwoNeutronsGamma_ECond;
-	std::vector<Double_t> fTwoNeutronsGamma_tDiff;
-	std::vector<Double_t> fTwoNeutronsGamma_tCond;
+	std::vector<Double_t> fStoringFirstNeutronCellGroup;
+	std::vector<Double_t> fStoringSecondNeutronCellGroup;
 	std::vector<UInt_t> fStoring2n_Cycle;
 
     TH1D* Ge_tSingle = new TH1D("Ge_tSingle", "Ge_tSingle", 30000,0,30000);
@@ -158,6 +159,7 @@ class Sorter{
 	TH1D* TwoNeutronsGamma_ECond = new TH1D("TwoNeutronsGamma_ECond", "TwoNeutronsGamma_ECond", 7000, 0, 7000);
 	TH1D* TwoNeutronsGamma_tDiff = new TH1D("TwoNeutronsGamma_tDiff", "TwoNeutronsGamma_tDiff", 1000, 0, 200);
 	TH1D* TwoNeutronsGamma_tCond = new TH1D("TwoNeutronsGamma_tCond", "TwoNeutronsGamma_tCond", 30000, 0, 30000);
+	TH1I* NeutronMultiplicity = new TH1I("NeutronMultiplicity", "NeutronMultiplicity", 20, 0, 20);
 
     //Bidim
     TH2D* ESvsBTD = new TH2D("ESvsBTD", "ESvsBTD", 5000, 0, 10, 7000, 0, 7000);

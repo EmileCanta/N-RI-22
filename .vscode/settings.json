@@ -70,7 +70,8 @@
         "rings_bgdsubstract.C": "cpp",
         "hist_substract.C": "cpp",
         "CalibPerRun.C": "cpp",
-        "multi_plot.C": "cpp"
+        "multi_plot.C": "cpp",
+        "Fitter2n.C": "cpp"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

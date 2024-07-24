@@ -2,7 +2,7 @@
 #include "TGraph.h"
 #include "fstream"
 
-void plot()
+void PlotData()
 {   
     TGraph* graph = new TGraph();
 

@@ -1,0 +1,1 @@
+root -l "src/Fitter2n.C+(\"/Users/cantacuzene/data/n-ri-22/runs/sorted_runs/84Ga/AllBut97.root\",0.1e3,3.2e3)"
